@@ -3,75 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Store with Custom Payment</title>
+    <title>Bazeline - Premium Menswear</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
-        .container { max-width: 600px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: auto; }
-        h2 { color: #333; text-align: center; }
-        .product { border-bottom: 1px solid #ddd; padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-        .btn:hover { background: #45a049; }
-        .checkout-box { margin-top: 20px; padding: 15px; background: #eef2f3; border-radius: 5px; display: none; }
-        input, select { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        /* --- General Reset & Fonts --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- Header / Navigation --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 60vh; /* Adjust as needed for mobile/desktop */
+            background: url('hero-image.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            color: white;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2); /* Dark overlay for text contrast */
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-title {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .shop-now-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 8px 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .shop-now-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        /* --- Section Styling --- */
+        .section {
+            padding: 40px 20px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .view-all-btn {
+            font-size: 12px;
+            color: #555;
+            border: 1px solid #ccc;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        /* --- Shop by Category (Circle) --- */
+        .category-grid {
+            display: flex;
+            overflow-x: auto; /* Enable horizontal scrolling on mobile */
+            gap: 15px;
+            padding-bottom: 10px;
+            justify-content: center; /* Center on larger screens */
+        }
+        .category-item {
+            flex: 0 0 auto; /* Prevent shrinking */
+            width: 100px;
+            text-align: center;
+        }
+        .cat-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 8px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .cat-circle:hover { border-color: #333; }
+        .cat-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cat-name {
+            font-size: 12px;
+        }
+
+        /* --- New Shirts (Product Cards) --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+            gap: 15px;
+        }
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets/desktop */
+            }
+        }
+        .product-card {
+            position: relative;
+        }
+        .prod-img-wrap {
+            width: 100%;
+            height: 0;
+            padding-bottom: 133%; /* Aspect Ratio 3:4 */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+            background-color: #f5f5f5;
+        }
+        .prod-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .prod-img {
+            transform: scale(1.05);
+        }
+        .prod-title {
+            font-size: 14px;
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+        .prod-price {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* --- Product Detail Section (Bottom) --- */
+        .detail-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            background-color: #fbfbfb;
+            padding: 40px 20px;
+        }
+        @media (min-width: 768px) {
+            .detail-section {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        /* Main Image (Right side in mobile, left in desktop) */
+        .detail-main-img-wrap {
+            flex: 1;
+            position: relative;
+        }
+        .detail-main-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* Thumbnails */
+        .detail-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .thumb-img {
+            width: 50px;
+            height: 66px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .thumb-img.active {
+            border-color: #333;
+            opacity: 1;
+        }
+
+        /* Details Column */
+        .detail-info-col {
+            flex: 1;
+            padding: 0 20px;
+        }
+        .detail-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .detail-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .detail-label {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        /* Size Swatches */
+        .size-swatches {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .size-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .size-btn:hover, .size-btn.active {
+            border-color: #333;
+            background-color: #333;
+            color: white;
+        }
+        .size-btn.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            background-color: #f9f9f9;
+        }
+        /* Quantity Input */
+        .qty-wrap {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            width: 120px;
+            margin-bottom: 20px;
+        }
+        .qty-btn {
+            width: 40px; height: 40px;
+            background: none; border: none;
+            cursor: pointer; font-size: 18px;
+        }
+        .qty-input {
+            width: 40px; height: 40px;
+            border: none; text-align: center;
+            font-size: 14px;
+        }
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-add-cart {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #333;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn-buy-now {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #f5f5f5;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Online Store</h2>
-    
-    <!-- Product Item -->
-    <div class="product">
-        <div>
-            <h3>Export Quality Dress</h3>
-            <p>Price: 1500 BDT</p>
+    <!-- --- 1. Header --- -->
+    <header class="header">
+        <div class="nav-left">
+            <button class="icon-btn">=Menu</button> <!-- Replace with Hamburger icon if using font icons -->
+            <button class="icon-btn">Q</button>    <!-- Replace with Search icon -->
         </div>
-        <button class="btn" onclick="openCheckout()">Buy Now</button>
-    </div>
+        <div class="logo">
+            BAZELINE
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn">O</button> <!-- Replace with User icon -->
+            <button class="icon-btn">Bag</button> <!-- Replace with Cart icon -->
+        </div>
+    </header>
 
-    <!-- Checkout Form with Custom Payment (Alternative to Merchant Gateway) -->
-    <div id="checkoutBox" class="checkout-box">
-        <h3>Checkout & Payment</h3>
-        <p>Send money via bKash/Nagad Personal (01700000000) and provide TrxID below:</p>
-        
-        <label>Your Name:</label>
-        <input type="text" id="custName" placeholder="Enter your name">
-        
-        <label>Your Phone Number:</label>
-        <input type="text" id="custPhone" placeholder="01XXXXXXXXX">
-        
-        <label>Payment Method:</label>
-        <select id="payMethod">
-            <option value="bKash">bKash Personal</option>
-            <option value="Nagad">Nagad Personal</option>
-        </select>
+    <!-- --- 2. Hero Section --- -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Bazeline's Shirt Heaven</h1>
+            <button class="shop-now-btn">Shop Now</button>
+        </div>
+    </section>
 
-        <label>Transaction ID (TrxID):</label>
-        <input type="text" id="trxId" placeholder="e.g., 9H87G6F5">
+    <!-- --- 3. Shop by Category --- -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Shop by Category</h2>
+        </div>
+        <div class="category-grid">
+            <!-- Category Item 1 -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-shirts.jpg" alt="Shirts" class="cat-img">
+                </div>
+                <span class="cat-name">Shirts</span>
+            </a>
+            <!-- Category Item 2 -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-half-sleeve.jpg" alt="Half Sleeve Shirts" class="cat-img">
+                </div>
+                <span class="cat-name">Half Sleeve Shirts</span>
+            </a>
+            <!-- Category Item 3 -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-pants.jpg" alt="Pants" class="cat-img">
+                </div>
+                <span class="cat-name">Pants</span>
+            </a>
+            <!-- Category Item 4 -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-kurtas.jpg" alt="Kurtas" class="cat-img">
+                </div>
+                <span class="cat-name">Kurtas</span>
+            </a>
+            <!-- Category Item 5 -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-drop-shoulder.jpg" alt="Drop Shoulders" class="cat-img">
+                </div>
+                <span class="cat-name">Drop Shoulders</span>
+            </a>
+             <!-- Category Item 6 (Extra for scrolling) -->
+            <a href="#" class="category-item">
+                <div class="cat-circle">
+                    <img src="cat-jackets.jpg" alt="Jackets" class="cat-img">
+                </div>
+                <span class="cat-name">Jackets</span>
+            </a>
+        </div>
+    </section>
 
-        <button class="btn" style="width:100%; margin-top: 10px;" onclick="submitOrder()">Confirm Order</button>
-    </div>
-</div>
-
-<script>
-    function openCheckout() {
-        document.getElementById('checkoutBox').style.display = 'block';
-    }
-
-    function submitOrder() {
-        let name = document.getElementById('custName').value;
-        let phone = document.getElementById('custPhone').value;
-        let trx = document.getElementById('trxId').value;
-
-        if(!name || !phone || !trx) {
-            alert('Please fill up all fields!');
-            return;
-        }
-
-        alert('Order submitted successfully! Admin will verify your TrxID and confirm soon.');
-        document.getElementById('checkoutBox').style.display = 'none';
-    }
-</script>
-
-</body>
-</html>
+    <!-- --- 4. New Shirts (Product Grid) --- -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">New Shirts</h2>
+            <a href="#" class="view-all-btn">View All</a>
+        </div>
+        <div class="product-grid">
+            <!-- Product Card 1 -->
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="prod1.jpg" alt="White and Red Pinstripe Shirt" class="prod-img">
+                </div>
+                <h3 class="prod-title">SUNFEST Off White and Red Pinstripe Shirt</h3>
+                <p class="prod-price">Tk 1,250.00</p>
+            </div>
+            <!-- Product Card 2 -->
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="prod2.jpg" alt="Slate Blue and Red Stripe Shirt" class="prod-img">
+                </div>
+                <h3 class="prod-title">SUNFEST Slate Blue and Red Stripe Shirt</h3>
+                <p class="prod-price">Tk 1,250.00</p>
+            </div>
+            <!-- Product Card 3 -->
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="prod3.jpg" alt="Grey Pinstripe Shirt" class="prod-img">
+                </div>
+                <h3 class="prod-title">SKYFALL Grey Pinstripe Shirt</h3>
+                <p class="prod-price">Tk 1,250.00</p>
+            </div>
+            <!-- Product Card 4 -->
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="prod4.jpg" alt="Jet Black Pinstripe Shirt" class="prod-img">
+                </div>
+                <h3 class="prod-title">SKYFALL Jet Black Pinstripe Shirt</h3>
+                <p class="prod-price">Tk 1,250.00</p>
+            </div>
