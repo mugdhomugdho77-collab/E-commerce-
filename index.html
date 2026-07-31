@@ -14,8 +14,8 @@
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; }
         .nav-left, .nav-right { display: flex; align-items: center; gap: 15px; }
         .logo { font-size: 22px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
-        .nav-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #111; }
-        .cart-badge { background-color: #111; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+        .nav-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #111; position: relative; }
+        .cart-badge, .wishlist-badge { background-color: #111; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
 
         /* Live Search Bar */
         .search-container { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: center; }
@@ -60,7 +60,7 @@
         .product-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
         
         .prod-img-wrap { width: 100%; height: 0; padding-bottom: 133%; position: relative; background-color: #f4f4f4; overflow: hidden; cursor: pointer; }
-        .prod-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
+        .prod-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease-in-out; }
         .prod-img.hover-img { opacity: 0; }
         .product-card:hover .prod-img.main-img { opacity: 0; }
         .product-card:hover .prod-img.hover-img { opacity: 1; }
@@ -83,7 +83,7 @@
         .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 8px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* 5. Quick View Modal */
+        /* Quick View Modal */
         .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; }
         .quick-view-modal.active { display: flex; }
         .quick-view-content { background: #fff; width: 90%; max-width: 750px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 6px; overflow: hidden; position: relative; }
@@ -91,20 +91,21 @@
         .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
         .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
 
-        /* 6. Shopping Cart Drawer System */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
-        .cart-overlay.active { visibility: visible; opacity: 1; }
-        .cart-drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
-        .cart-drawer.active { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-        .cart-item { display: flex; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px; align-items: center; }
-        .cart-item img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; }
-        .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #f9f9f9; }
-        .cart-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .checkout-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; }
+        /* Shopping Cart & Wishlist Drawer System */
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
+        .drawer-overlay.active { visibility: visible; opacity: 1; }
+        
+        .drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
+        .drawer.active { right: 0; }
+        .drawer-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .drawer-item { display: flex; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px; align-items: center; }
+        .drawer-item img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; }
+        .drawer-footer { padding: 20px; border-top: 1px solid #eee; background: #f9f9f9; }
+        .drawer-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .drawer-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; }
 
-        /* 7. Checkout & Order Placement */
+        /* Checkout Modal */
         .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
         .checkout-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .checkout-modal h2 { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
@@ -114,20 +115,21 @@
         .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; }
 
-        /* 8. Footer & Professional Trust Elements */
+        /* Footer */
         .footer { background-color: #111; color: #aaa; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 50px; }
         .footer p { margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. Header & Navigation Section -->
+    <!-- Header & Navigation -->
     <header class="header">
         <div class="nav-left">
             <button class="nav-icon-btn">☰ Menu</button>
         </div>
         <div class="logo">Bazeline</div>
         <div class="nav-right">
+            <button class="nav-icon-btn" id="wishlist-btn">❤️ Wishlist <span class="wishlist-badge" id="wishlist-count">0</span></button>
             <button class="nav-icon-btn" id="cart-btn">🛒 Bag <span class="cart-badge" id="cart-count">0</span></button>
         </div>
     </header>
@@ -140,7 +142,7 @@
         </div>
     </div>
 
-    <!-- 2. Hero & Promotional Banner (Auto Slider) -->
+    <!-- Hero Slider -->
     <section class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600');">
             <div class="hero-content">
@@ -192,10 +194,18 @@
                 <div class="cat-circle"><img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=300" class="cat-img" alt="Pants"></div>
                 <div class="cat-name">Pants</div>
             </div>
+            <div class="category-item" onclick="filterByCategory('Kurtas')">
+                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300" class="cat-img" alt="Kurtas"></div>
+                <div class="cat-name">Kurtas</div>
+            </div>
+            <div class="category-item" onclick="filterByCategory('T-Shirts')">
+                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300" class="cat-img" alt="T-Shirts"></div>
+                <div class="cat-name">T-Shirts</div>
+            </div>
         </div>
     </section>
 
-    <!-- 3. Product Catalog & Display -->
+    <!-- Product Catalog -->
     <section class="section">
         <div class="section-header">
             <h2 class="section-title" id="catalog-title">Featured Catalog</h2>
@@ -204,26 +214,39 @@
         <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- 6. Shopping Cart & Drawer System -->
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-drawer" id="cart-drawer">
-        <div class="cart-header">
+    <!-- Overlay & Drawers -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Cart Drawer -->
+    <div class="drawer" id="cart-drawer">
+        <div class="drawer-header">
             <h3>Your Bag</h3>
             <button id="close-cart" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
         </div>
-        <div class="cart-items" id="cart-items-container">
+        <div class="drawer-body" id="cart-items-container">
             <p style="text-align: center; color: #777; margin-top: 20px;">Your bag is empty</p>
         </div>
-        <div class="cart-footer">
-            <div class="cart-total">
+        <div class="drawer-footer">
+            <div class="drawer-total">
                 <span>Subtotal:</span>
                 <span id="cart-total-price">Tk 0.00</span>
             </div>
-            <button class="checkout-btn" id="open-checkout-btn">Proceed to Checkout</button>
+            <button class="drawer-btn" id="open-checkout-btn">Proceed to Checkout</button>
         </div>
     </div>
 
-    <!-- 7. Checkout & Order Placement System -->
+    <!-- Wishlist Drawer -->
+    <div class="drawer" id="wishlist-drawer">
+        <div class="drawer-header">
+            <h3>My Wishlist</h3>
+            <button id="close-wishlist" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
+        </div>
+        <div class="drawer-body" id="wishlist-items-container">
+            <p style="text-align: center; color: #777; margin-top: 20px;">Your wishlist is empty</p>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
     <div class="checkout-modal" id="checkout-modal">
         <button class="close-modal" id="close-checkout-btn">&times;</button>
         <h2>Checkout Details</h2>
@@ -261,7 +284,7 @@
         <div class="quick-view-content" id="quick-view-body"></div>
     </div>
 
-    <!-- 8. Footer & Professional Trust Elements -->
+    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
         <p>Hotline: +8801700000000 | Email: support@bazeline.com</p>
@@ -271,6 +294,7 @@
     <script src="products.js"></script>
     <script>
         let cart = [];
+        let wishlist = [];
 
         function renderProducts(list) {
             const grid = document.getElementById('product-grid');
@@ -283,6 +307,7 @@
             }
 
             list.forEach(product => {
+                const isWishlisted = wishlist.some(item => item.id === product.id);
                 grid.innerHTML += `
                     <div class="product-card">
                         <span class="badge-discount">${product.discount}</span>
@@ -291,7 +316,7 @@
                             <img src="${product.image}" alt="${product.name}" class="prod-img main-img">
                             <img src="${product.hoverImage}" alt="${product.name}" class="prod-img hover-img">
                             <div class="card-actions">
-                                <button class="action-icon-btn" onclick="event.stopPropagation(); toggleWishlist(this)" title="Wishlist">❤️</button>
+                                <button class="action-icon-btn" style="color: ${isWishlisted ? 'red' : '#111'}" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)" title="Wishlist">❤️</button>
                                 <button class="action-icon-btn" onclick="event.stopPropagation(); openQuickView(${product.id})" title="Quick View">👁️</button>
                             </div>
                         </div>
@@ -357,8 +382,40 @@
             document.getElementById('quick-view-modal').classList.remove('active');
         }
 
-        function toggleWishlist(btn) {
-            btn.style.color = btn.style.color === 'red' ? '#111' : 'red';
+        function toggleWishlist(id, btn) {
+            const product = products.find(p => p.id === id);
+            const index = wishlist.findIndex(item => item.id === id);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                btn.style.color = '#111';
+            } else {
+                wishlist.push(product);
+                btn.style.color = 'red';
+            }
+            updateWishlistUI();
+        }
+
+        function updateWishlistUI() {
+            document.getElementById('wishlist-count').innerText = wishlist.length;
+            const container = document.getElementById('wishlist-items-container');
+            if (wishlist.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #777; margin-top: 20px;">Your wishlist is empty</p>`;
+                return;
+            }
+            container.innerHTML = "";
+            wishlist.forEach((item) => {
+                container.innerHTML += `
+                    <div class="drawer-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div style="flex: 1;">
+                            <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name}</h4>
+                            <p style="font-size: 13px; font-weight: bold;">Tk ${item.price.toLocaleString()}.00</p>
+                        </div>
+                        <button onclick="addToCart(${item.id});" style="background:#111;color:#fff;border:none;padding:5px 8px;font-size:11px;cursor:pointer;">Add</button>
+                    </div>
+                `;
+            });
         }
 
         function addToCart(id) {
@@ -381,7 +438,7 @@
             cart.forEach((item) => {
                 total += item.price;
                 container.innerHTML += `
-                    <div class="cart-item">
+                    <div class="drawer-item">
                         <img src="${item.image}" alt="${item.name}">
                         <div>
                             <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name}</h4>
@@ -394,23 +451,41 @@
         }
 
         const cartDrawer = document.getElementById('cart-drawer');
-        const cartOverlay = document.getElementById('cart-overlay');
+        const wishlistDrawer = document.getElementById('wishlist-drawer');
+        const drawerOverlay = document.getElementById('drawer-overlay');
         const checkoutModal = document.getElementById('checkout-modal');
 
         function openCart() {
+            wishlistDrawer.classList.remove('active');
             cartDrawer.classList.add('active');
-            cartOverlay.classList.add('active');
+            drawerOverlay.classList.add('active');
         }
 
         function closeCart() {
             cartDrawer.classList.remove('active');
-            cartOverlay.classList.remove('active');
+            drawerOverlay.classList.remove('active');
+        }
+
+        function openWishlist() {
+            cartDrawer.classList.remove('active');
+            wishlistDrawer.classList.add('active');
+            drawerOverlay.classList.add('active');
+        }
+
+        function closeWishlist() {
+            wishlistDrawer.classList.remove('active');
+            drawerOverlay.classList.remove('active');
         }
 
         document.getElementById('cart-btn').addEventListener('click', openCart);
         document.getElementById('close-cart').addEventListener('click', closeCart);
-        cartOverlay.addEventListener('click', () => {
+        
+        document.getElementById('wishlist-btn').addEventListener('click', openWishlist);
+        document.getElementById('close-wishlist').addEventListener('click', closeWishlist);
+
+        drawerOverlay.addEventListener('click', () => {
             closeCart();
+            closeWishlist();
             checkoutModal.classList.remove('active');
         });
 
@@ -425,7 +500,7 @@
 
         document.getElementById('close-checkout-btn').addEventListener('click', () => {
             checkoutModal.classList.remove('active');
-            cartOverlay.classList.remove('active');
+            drawerOverlay.classList.remove('active');
         });
 
         function toggleTrxField() {
@@ -440,12 +515,11 @@
             cart = [];
             updateCartUI();
             checkoutModal.classList.remove('active');
-            cartOverlay.classList.remove('active');
+            drawerOverlay.classList.remove('active');
             document.getElementById('order-form').reset();
             document.getElementById('trx-group').style.display = 'none';
         }
 
-        // Hero Slider Auto-play & Manual Change
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         
@@ -455,7 +529,6 @@
             slides[currentSlide].classList.add('active');
         }
 
-        // Auto slide every 4 seconds
         setInterval(() => {
             changeSlide(1);
         }, 4000);
