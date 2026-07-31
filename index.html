@@ -20,14 +20,14 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* --- Header / Navigation --- */
+        /* --- Professional Header / Navigation Bar --- */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            background-color: #fff;
-            border-bottom: 1px solid #eee;
+            padding: 15px 25px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -35,59 +35,74 @@
         .nav-left, .nav-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
         .logo {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
-        .icon-btn {
+        .nav-icon-btn {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #111;
+        }
+        .cart-badge {
+            background-color: #111;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
         }
 
         /* --- Hero Section --- */
         .hero {
             position: relative;
             width: 100%;
-            height: 60vh; /* Adjust as needed for mobile/desktop */
-            background: url('hero-image.jpg') center/cover no-repeat;
+            height: 65vh;
+            background: url('https://images.unsplash.com/photo-1490114838077-ac382d59afc2?auto=format&fit=crop&q=80&w=1200') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
             color: white;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
             text-align: center;
         }
         .hero::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2); /* Dark overlay for text contrast */
+            background: rgba(0, 0, 0, 0.3);
         }
         .hero-content {
             position: relative;
             z-index: 1;
         }
         .hero-title {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 300;
             margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.4);
         }
         .shop-now-btn {
             background-color: transparent;
             color: white;
             border: 1px solid white;
-            padding: 8px 30px;
-            font-size: 14px;
+            padding: 10px 35px;
+            font-size: 13px;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
         }
         .shop-now-btn:hover {
             background-color: white;
@@ -96,7 +111,9 @@
 
         /* --- Section Styling --- */
         .section {
-            padding: 40px 20px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .section-header {
             display: flex;
@@ -105,346 +122,288 @@
             margin-bottom: 25px;
         }
         .section-title {
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
         .view-all-btn {
             font-size: 12px;
             color: #555;
             border: 1px solid #ccc;
-            padding: 4px 12px;
+            padding: 6px 15px;
             border-radius: 4px;
+            transition: 0.2s;
+        }
+        .view-all-btn:hover {
+            background-color: #111;
+            color: #fff;
+            border-color: #111;
         }
 
-        /* --- Shop by Category (Circle) --- */
+        /* --- Shop by Category (Circle Grid) --- */
         .category-grid {
             display: flex;
-            overflow-x: auto; /* Enable horizontal scrolling on mobile */
-            gap: 15px;
+            overflow-x: auto;
+            gap: 20px;
             padding-bottom: 10px;
-            justify-content: center; /* Center on larger screens */
+            scrollbar-width: none; /* Hide scrollbar for clean look */
         }
+        .category-grid::-webkit-scrollbar { display: none; }
         .category-item {
-            flex: 0 0 auto; /* Prevent shrinking */
-            width: 100px;
+            flex: 0 0 auto;
+            width: 110px;
             text-align: center;
         }
         .cat-circle {
-            width: 100px;
-            height: 100px;
+            width: 105px;
+            height: 105px;
             border-radius: 50%;
             overflow: hidden;
             margin-bottom: 8px;
-            border: 2px solid transparent;
+            border: 2px solid #eee;
             transition: border-color 0.3s;
         }
-        .cat-circle:hover { border-color: #333; }
+        .cat-circle:hover { border-color: #111; }
         .cat-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         .cat-name {
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        /* --- New Shirts (Product Cards) --- */
+        /* --- Product Grid (Shirts & Pants) --- */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
         @media (min-width: 768px) {
             .product-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets/desktop */
+                grid-template-columns: repeat(4, 1fr);
             }
         }
         .product-card {
-            position: relative;
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
         }
         .prod-img-wrap {
             width: 100%;
             height: 0;
-            padding-bottom: 133%; /* Aspect Ratio 3:4 */
+            padding-bottom: 133%; /* 3:4 Aspect Ratio */
             position: relative;
+            background-color: #f4f4f4;
             overflow: hidden;
-            margin-bottom: 10px;
-            background-color: #f5f5f5;
         }
         .prod-img {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
         .product-card:hover .prod-img {
             transform: scale(1.05);
         }
+        .prod-details {
+            padding: 12px 5px;
+        }
         .prod-title {
             font-size: 14px;
-            font-weight: normal;
-            margin-bottom: 4px;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .prod-price {
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* --- Product Detail Section (Bottom) --- */
-        .detail-section {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            background-color: #fbfbfb;
-            padding: 40px 20px;
-        }
-        @media (min-width: 768px) {
-            .detail-section {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-        }
-
-        /* Main Image (Right side in mobile, left in desktop) */
-        .detail-main-img-wrap {
-            flex: 1;
-            position: relative;
-        }
-        .detail-main-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        /* Thumbnails */
-        .detail-thumbnails {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            justify-content: center;
-        }
-        .thumb-img {
-            width: 50px;
-            height: 66px;
-            object-fit: cover;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-        .thumb-img.active {
-            border-color: #333;
-            opacity: 1;
-        }
-
-        /* Details Column */
-        .detail-info-col {
-            flex: 1;
-            padding: 0 20px;
-        }
-        .detail-title {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        .detail-price {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .detail-label {
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-        /* Size Swatches */
-        .size-swatches {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .size-btn {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            transition: all 0.2s;
-        }
-        .size-btn:hover, .size-btn.active {
-            border-color: #333;
-            background-color: #333;
-            color: white;
-        }
-        .size-btn.disabled {
-            color: #ccc;
-            cursor: not-allowed;
-            background-color: #f9f9f9;
-        }
-        /* Quantity Input */
-        .qty-wrap {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ccc;
-            width: 120px;
-            margin-bottom: 20px;
-        }
-        .qty-btn {
-            width: 40px; height: 40px;
-            background: none; border: none;
-            cursor: pointer; font-size: 18px;
-        }
-        .qty-input {
-            width: 40px; height: 40px;
-            border: none; text-align: center;
             font-size: 14px;
-        }
-        /* Action Buttons */
-        .action-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .btn-add-cart {
-            background-color: #fff;
-            color: #333;
-            border: 1px solid #333;
-            padding: 12px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .btn-buy-now {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            width: 100%;
+            font-weight: bold;
+            color: #111;
         }
 
         /* --- Footer --- */
         .footer {
-            background-color: #f5f5f5;
-            padding: 30px 20px;
+            background-color: #111;
+            color: #aaa;
+            padding: 40px 20px;
             text-align: center;
-            font-size: 12px;
-            color: #777;
+            font-size: 13px;
+            margin-top: 50px;
         }
-
+        .footer p { margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- --- 1. Header --- -->
+    <!-- --- Professional Header --- -->
     <header class="header">
         <div class="nav-left">
-            <button class="icon-btn">=Menu</button> <!-- Replace with Hamburger icon if using font icons -->
-            <button class="icon-btn">Q</button>    <!-- Replace with Search icon -->
+            <button class="nav-icon-btn">☰ Menu</button>
+            <button class="nav-icon-btn">🔍 Search</button>
         </div>
         <div class="logo">
-            BAZELINE
+            Bazeline
         </div>
         <div class="nav-right">
-            <button class="icon-btn">O</button> <!-- Replace with User icon -->
-            <button class="icon-btn">Bag</button> <!-- Replace with Cart icon -->
+            <button class="nav-icon-btn">👤 Account</button>
+            <button class="nav-icon-btn">🛒 Bag <span class="cart-badge">0</span></button>
         </div>
     </header>
 
-    <!-- --- 2. Hero Section --- -->
+    <!-- --- Hero Section --- -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Bazeline's Shirt Heaven</h1>
+            <h1 class="hero-title">Bazeline's Shirt & Pant Heaven</h1>
             <button class="shop-now-btn">Shop Now</button>
         </div>
     </section>
 
-    <!-- --- 3. Shop by Category --- -->
+    <!-- --- Shop by Category --- -->
     <section class="section">
         <div class="section-header">
             <h2 class="section-title">Shop by Category</h2>
         </div>
         <div class="category-grid">
-            <!-- Category Item 1 -->
             <a href="#" class="category-item">
                 <div class="cat-circle">
-                    <img src="cat-shirts.jpg" alt="Shirts" class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=300" alt="Shirts" class="cat-img">
                 </div>
                 <span class="cat-name">Shirts</span>
             </a>
-            <!-- Category Item 2 -->
             <a href="#" class="category-item">
                 <div class="cat-circle">
-                    <img src="cat-half-sleeve.jpg" alt="Half Sleeve Shirts" class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=300" alt="Half Sleeve" class="cat-img">
                 </div>
-                <span class="cat-name">Half Sleeve Shirts</span>
+                <span class="cat-name">Half Sleeve</span>
             </a>
-            <!-- Category Item 3 -->
             <a href="#" class="category-item">
                 <div class="cat-circle">
-                    <img src="cat-pants.jpg" alt="Pants" class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=300" alt="Pants" class="cat-img">
                 </div>
                 <span class="cat-name">Pants</span>
             </a>
-            <!-- Category Item 4 -->
             <a href="#" class="category-item">
                 <div class="cat-circle">
-                    <img src="cat-kurtas.jpg" alt="Kurtas" class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&q=80&w=300" alt="Kurtas" class="cat-img">
                 </div>
                 <span class="cat-name">Kurtas</span>
             </a>
-            <!-- Category Item 5 -->
             <a href="#" class="category-item">
                 <div class="cat-circle">
-                    <img src="cat-drop-shoulder.jpg" alt="Drop Shoulders" class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&q=80&w=300" alt="Drop Shoulders" class="cat-img">
                 </div>
-                <span class="cat-name">Drop Shoulders</span>
-            </a>
-             <!-- Category Item 6 (Extra for scrolling) -->
-            <a href="#" class="category-item">
-                <div class="cat-circle">
-                    <img src="cat-jackets.jpg" alt="Jackets" class="cat-img">
-                </div>
-                <span class="cat-name">Jackets</span>
+                <span class="cat-name">T-Shirts</span>
             </a>
         </div>
     </section>
 
-    <!-- --- 4. New Shirts (Product Grid) --- -->
+    <!-- --- New Shirts Collection --- -->
     <section class="section">
         <div class="section-header">
-            <h2 class="section-title">New Shirts</h2>
+            <h2 class="section-title">New Shirts Collection</h2>
             <a href="#" class="view-all-btn">View All</a>
         </div>
         <div class="product-grid">
-            <!-- Product Card 1 -->
             <div class="product-card">
                 <div class="prod-img-wrap">
-                    <img src="prod1.jpg" alt="White and Red Pinstripe Shirt" class="prod-img">
+                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
                 </div>
-                <h3 class="prod-title">SUNFEST Off White and Red Pinstripe Shirt</h3>
-                <p class="prod-price">Tk 1,250.00</p>
+                <div class="prod-details">
+                    <h3 class="prod-title">SUNFEST Off White Pinstripe Shirt</h3>
+                    <p class="prod-price">Tk 1,250.00</p>
+                </div>
             </div>
-            <!-- Product Card 2 -->
             <div class="product-card">
                 <div class="prod-img-wrap">
-                    <img src="prod2.jpg" alt="Slate Blue and Red Stripe Shirt" class="prod-img">
+                    <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
                 </div>
-                <h3 class="prod-title">SUNFEST Slate Blue and Red Stripe Shirt</h3>
-                <p class="prod-price">Tk 1,250.00</p>
+                <div class="prod-details">
+                    <h3 class="prod-title">SUNFEST Slate Blue Stripe Shirt</h3>
+                    <p class="prod-price">Tk 1,250.00</p>
+                </div>
             </div>
-            <!-- Product Card 3 -->
             <div class="product-card">
                 <div class="prod-img-wrap">
-                    <img src="prod3.jpg" alt="Grey Pinstripe Shirt" class="prod-img">
+                    <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
                 </div>
-                <h3 class="prod-title">SKYFALL Grey Pinstripe Shirt</h3>
-                <p class="prod-price">Tk 1,250.00</p>
+                <div class="prod-details">
+                    <h3 class="prod-title">SKYFALL Grey Pinstripe Shirt</h3>
+                    <p class="prod-price">Tk 1,250.00</p>
+                </div>
             </div>
-            <!-- Product Card 4 -->
             <div class="product-card">
                 <div class="prod-img-wrap">
-                    <img src="prod4.jpg" alt="Jet Black Pinstripe Shirt" class="prod-img">
+                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
                 </div>
-                <h3 class="prod-title">SKYFALL Jet Black Pinstripe Shirt</h3>
-                <p class="prod-price">Tk 1,250.00</p>
+                <div class="prod-details">
+                    <h3 class="prod-title">SKYFALL Jet Black Casual Shirt</h3>
+                    <p class="prod-price">Tk 1,250.00</p>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- --- New Pants Collection --- -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Trending Pants</h2>
+            <a href="#" class="view-all-btn">View All</a>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
+                </div>
+                <div class="prod-details">
+                    <h3 class="prod-title">Classic Formal Brown Trouser</h3>
+                    <p class="prod-price">Tk 1,650.00</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
+                </div>
+                <div class="prod-details">
+                    <h3 class="prod-title">Slim Fit Stylish Denim Pant</h3>
+                    <p class="prod-price">Tk 1,850.00</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
+                </div>
+                <div class="prod-details">
+                    <h3 class="prod-title">Casual Cargo Olive Pant</h3>
+                    <p class="prod-price">Tk 1,750.00</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="prod-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1473966968600-fa809b869a1c?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
+                </div>
+                <div class="prod-details">
+                    <h3 class="prod-title">Chino Stretch Fit Black Pant</h3>
+                    <p class="prod-price">Tk 1,550.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- Footer --- -->
+    <footer class="footer">
+        <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
+        <p>Designed for Professional E-commerce Experience</p>
+    </footer>
+
+</body>
+</html>
