@@ -10,12 +10,20 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
+        /* 1. Header & Navigation Section */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; }
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; }
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 15px; }
         .logo { font-size: 22px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
         .nav-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #111; }
         .cart-badge { background-color: #111; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
 
+        /* Live Search Bar */
+        .search-container { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: center; }
+        .search-box { width: 100%; max-width: 600px; display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #fff; }
+        .search-box input { flex: 1; padding: 10px 15px; border: none; outline: none; font-size: 14px; }
+        .search-box button { background: #111; color: #fff; border: none; padding: 0 20px; cursor: pointer; font-size: 14px; }
+
+        /* 2. Hero & Promotional Banner */
         .hero-slider { position: relative; width: 100%; height: 70vh; overflow: hidden; background-color: #111; }
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; color: white; padding-bottom: 60px; text-align: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; z-index: 1; }
         .slide.active { opacity: 1; visibility: visible; z-index: 2; }
@@ -30,16 +38,18 @@
         .trust-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
         .trust-item p { font-size: 11px; color: #666; }
 
-        .section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .section-title { font-size: 20px; font-weight: 600; }
-        .view-all-btn { font-size: 12px; color: #555; border: 1px solid #ccc; padding: 6px 15px; border-radius: 4px; }
+        .view-all-btn { font-size: 12px; color: #555; border: 1px solid #ccc; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
         .view-all-btn:hover { background-color: #111; color: #fff; border-color: #111; }
 
+        /* 3. Product Catalog & Category Shortcuts */
         .category-grid { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px; scrollbar-width: none; }
         .category-grid::-webkit-scrollbar { display: none; }
-        .category-item { flex: 0 0 auto; width: 110px; text-align: center; }
-        .cat-circle { width: 105px; height: 105px; border-radius: 50%; overflow: hidden; margin-bottom: 8px; border: 2px solid #eee; }
+        .category-item { flex: 0 0 auto; width: 110px; text-align: center; cursor: pointer; }
+        .cat-circle { width: 105px; height: 105px; border-radius: 50%; overflow: hidden; margin-bottom: 8px; border: 2px solid #eee; transition: 0.3s; }
+        .category-item:hover .cat-circle { border-color: #111; }
         .cat-img { width: 100%; height: 100%; object-fit: cover; }
         .cat-name { font-size: 13px; font-weight: 500; }
 
@@ -49,7 +59,7 @@
         .product-card { background: #fff; border-radius: 6px; overflow: hidden; position: relative; border: 1px solid #eee; transition: 0.3s; }
         .product-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
         
-        .prod-img-wrap { width: 100%; height: 0; padding-bottom: 133%; position: relative; background-color: #f4f4f4; overflow: hidden; }
+        .prod-img-wrap { width: 100%; height: 0; padding-bottom: 133%; position: relative; background-color: #f4f4f4; overflow: hidden; cursor: pointer; }
         .prod-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
         .prod-img.hover-img { opacity: 0; }
         .product-card:hover .prod-img.main-img { opacity: 0; }
@@ -73,7 +83,7 @@
         .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 8px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* Quick View */
+        /* 5. Quick View Modal */
         .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; }
         .quick-view-modal.active { display: flex; }
         .quick-view-content { background: #fff; width: 90%; max-width: 750px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 6px; overflow: hidden; position: relative; }
@@ -81,7 +91,7 @@
         .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
         .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
 
-        /* Cart Drawer */
+        /* 6. Shopping Cart Drawer System */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
         .cart-overlay.active { visibility: visible; opacity: 1; }
         .cart-drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
@@ -94,7 +104,7 @@
         .cart-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
         .checkout-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; }
 
-        /* Checkout Modal */
+        /* 7. Checkout & Order Placement */
         .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
         .checkout-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .checkout-modal h2 { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
@@ -104,11 +114,14 @@
         .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; }
 
+        /* 8. Footer & Professional Trust Elements */
         .footer { background-color: #111; color: #aaa; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 50px; }
+        .footer p { margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
+    <!-- 1. Header & Navigation Section -->
     <header class="header">
         <div class="nav-left">
             <button class="nav-icon-btn">☰ Menu</button>
@@ -119,7 +132,79 @@
         </div>
     </header>
 
-    <!-- Cart Drawer -->
+    <!-- Live Search Bar -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search for shirts, pants, collections..." onkeyup="filterProducts()">
+            <button onclick="filterProducts()">Search</button>
+        </div>
+    </div>
+
+    <!-- 2. Hero & Promotional Banner (Auto Slider) -->
+    <section class="hero-slider">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600');">
+            <div class="hero-content">
+                <h1 class="hero-title">Bazeline's Exclusive Collection</h1>
+                <button class="shop-now-btn">Shop Now</button>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600');">
+            <div class="hero-content">
+                <h1 class="hero-title">New Summer Arrival 2026</h1>
+                <button class="shop-now-btn">Explore More</button>
+            </div>
+        </div>
+        <button class="slider-arrow prev-slide" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow next-slide" onclick="changeSlide(1)">&#10095;</button>
+    </section>
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+        <div class="trust-item">
+            <h4>Free Delivery</h4>
+            <p>On all orders above Tk 1,500</p>
+        </div>
+        <div class="trust-item">
+            <h4>7 Days Return</h4>
+            <p>Easy exchange & return policy</p>
+        </div>
+        <div class="trust-item">
+            <h4>100% Secure Payment</h4>
+            <p>Bkash, Nagad & Cash on Delivery</p>
+        </div>
+    </div>
+
+    <!-- Shop by Category Shortcuts -->
+    <section class="section" style="padding-bottom: 20px;">
+        <div class="section-header">
+            <h2 class="section-title">Shop by Category</h2>
+        </div>
+        <div class="category-grid">
+            <div class="category-item" onclick="filterByCategory('All')">
+                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300" class="cat-img" alt="All"></div>
+                <div class="cat-name">All</div>
+            </div>
+            <div class="category-item" onclick="filterByCategory('Shirts')">
+                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=300" class="cat-img" alt="Shirts"></div>
+                <div class="cat-name">Shirts</div>
+            </div>
+            <div class="category-item" onclick="filterByCategory('Pants')">
+                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=300" class="cat-img" alt="Pants"></div>
+                <div class="cat-name">Pants</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Product Catalog & Display -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title" id="catalog-title">Featured Catalog</h2>
+            <a href="#" class="view-all-btn" onclick="filterByCategory('All'); return false;">View All</a>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <!-- 6. Shopping Cart & Drawer System -->
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
@@ -138,7 +223,7 @@
         </div>
     </div>
 
-    <!-- Checkout Modal Form -->
+    <!-- 7. Checkout & Order Placement System -->
     <div class="checkout-modal" id="checkout-modal">
         <button class="close-modal" id="close-checkout-btn">&times;</button>
         <h2>Checkout Details</h2>
@@ -176,63 +261,28 @@
         <div class="quick-view-content" id="quick-view-body"></div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero-slider">
-        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600');">
-            <div class="hero-content">
-                <h1 class="hero-title">Bazeline's Exclusive Collection</h1>
-                <button class="shop-now-btn">Shop Now</button>
-            </div>
-        </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600');">
-            <div class="hero-content">
-                <h1 class="hero-title">New Summer Arrival 2026</h1>
-                <button class="shop-now-btn">Explore More</button>
-            </div>
-        </div>
-        <button class="slider-arrow prev-slide" onclick="changeSlide(-1)">&#10094;</button>
-        <button class="slider-arrow next-slide" onclick="changeSlide(1)">&#10095;</button>
-    </section>
-
-    <!-- Trust Badges -->
-    <div class="trust-badges">
-        <div class="trust-item">
-            <h4>Free Delivery</h4>
-            <p>On all orders above Tk 1,500</p>
-        </div>
-        <div class="trust-item">
-            <h4>7 Days Return</h4>
-            <p>Easy exchange & return policy</p>
-        </div>
-        <div class="trust-item">
-            <h4>100% Secure Payment</h4>
-            <p>Bkash, Nagad & Cash on Delivery</p>
-        </div>
-    </div>
-
-    <!-- Product Catalog -->
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">Featured Catalog</h2>
-            <a href="#" class="view-all-btn">View All</a>
-        </div>
-        <div class="product-grid" id="product-grid"></div>
-    </section>
-
+    <!-- 8. Footer & Professional Trust Elements -->
     <footer class="footer">
         <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
+        <p>Hotline: +8801700000000 | Email: support@bazeline.com</p>
+        <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
     </footer>
 
     <script src="products.js"></script>
     <script>
         let cart = [];
 
-        function loadProducts() {
+        function renderProducts(list) {
             const grid = document.getElementById('product-grid');
             if (!grid) return;
             grid.innerHTML = "";
 
-            products.forEach(product => {
+            if (list.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 30px;">No products found.</p>`;
+                return;
+            }
+
+            list.forEach(product => {
                 grid.innerHTML += `
                     <div class="product-card">
                         <span class="badge-discount">${product.discount}</span>
@@ -257,6 +307,31 @@
                     </div>
                 `;
             });
+        }
+
+        function loadProducts() {
+            renderProducts(products);
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query) ||
+                p.description.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        function filterByCategory(category) {
+            if (category === 'All') {
+                document.getElementById('catalog-title').innerText = "Featured Catalog";
+                renderProducts(products);
+            } else {
+                document.getElementById('catalog-title').innerText = category + " Collection";
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
         }
 
         function openQuickView(id) {
@@ -370,13 +445,20 @@
             document.getElementById('trx-group').style.display = 'none';
         }
 
+        // Hero Slider Auto-play & Manual Change
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
+        
         function changeSlide(dir) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + dir + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
         }
+
+        // Auto slide every 4 seconds
+        setInterval(() => {
+            changeSlide(1);
+        }, 4000);
 
         window.onload = loadProducts;
     </script>
