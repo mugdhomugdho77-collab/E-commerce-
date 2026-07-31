@@ -9,7 +9,7 @@ const products = [
         stock: "In Stock",
         image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
         hoverImage: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
-        description: "Premium quality formal white shirt made with breathable cotton fabric. Perfect for formal and semi-formal occasions."
+        description: "Premium quality cotton Oxford white shirt designed for formal and casual wear. Comfortable fit and breathable fabric."
     },
     {
         id: 2,
@@ -19,9 +19,9 @@ const products = [
         oldPrice: 1950,
         discount: "15% OFF",
         stock: "In Stock",
-        image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600",
-        hoverImage: "https://images.unsplash.com/photo-1589571894960-20bbe2828d1c?w=600",
-        description: "Lightweight and stylish sky blue linen shirt designed for casual summer outings and daily wear."
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
+        description: "Lightweight sky blue linen shirt, perfect for summer outings and casual hangouts."
     },
     {
         id: 3,
@@ -32,8 +32,8 @@ const products = [
         discount: "17% OFF",
         stock: "In Stock",
         image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
-        hoverImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
-        description: "Tailored slim-fit black formal trousers offering maximum comfort and a sharp professional look."
+        hoverImage: "https://images.unsplash.com/photo-1473966968600-fa809b869a1a?w=600",
+        description: "Elegant slim-fit black formal trousers tailored for office wear and formal events."
     },
     {
         id: 4,
@@ -43,21 +43,21 @@ const products = [
         oldPrice: 2500,
         discount: "16% OFF",
         stock: "In Stock",
-        image: "https://images.unsplash.com/photo-1473966968600-fa809b869a19?w=600",
-        hoverImage: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600",
-        description: "Versatile khaki chino pants built for both office wear and weekend hangouts."
+        image: "https://images.unsplash.com/photo-1473966968600-fa809b869a1a?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+        description: "Comfortable stretchable khaki chino pants suitable for everyday casual styling."
     },
     {
         id: 5,
         name: "Classic Black Kurta",
         category: "Kurtas",
         price: 1950,
-        oldPrice: 2300,
-        discount: "15% OFF",
+        oldPrice: 2500,
+        discount: "22% OFF",
         stock: "In Stock",
         image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",
         hoverImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600",
-        description: "Traditional yet modern black festive kurta crafted with premium fabric."
+        description: "Traditional yet modern black festive kurta crafted with fine fabric for special occasions."
     },
     {
         id: 6,
@@ -65,10 +65,10 @@ const products = [
         category: "T-Shirts",
         price: 850,
         oldPrice: 1100,
-        discount: "22% OFF",
+        discount: "23% OFF",
         stock: "In Stock",
         image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
         hoverImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600",
-        description: "Ultra-soft cotton minimalist black t-shirt for daily comfort."
+        description: "Soft cotton minimalist black t-shirt offering maximum comfort and durability."
     }
 ];
