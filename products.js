@@ -1,6 +1,3 @@
-// এই ফাইলে ক্লাইন্টের সব প্রোডাক্টের ডেটা থাকবে। 
-// নতুন ক্লাইন্ট আসলে শুধু এই ডেটাগুলো বদলালেই পুরো সাইট আপডেট হয়ে যাবে!
-
 const products = [
     {
         id: 1,
@@ -21,14 +18,14 @@ const products = [
         name: "SKYFALL Grey Pinstripe Shirt",
         category: "Shirts",
         price: 1250,
-        image: "https://images.unsplash.com/photo-1589810645855-6e3e55171dfb?w=500"
+        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500"
     },
     {
         id: 4,
         name: "SKYFALL Jet Black Casual Shirt",
         category: "Shirts",
         price: 1250,
-        image: "https://images.unsplash.com/photo-1618354691373-d851সি5c3a90?w=500"
+        image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500"
     },
     {
         id: 5,
