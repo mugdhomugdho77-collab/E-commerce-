@@ -1,44 +1,50 @@
 const products = [
     {
         id: 1,
-        name: "SUNFEST Off White Pinstripe Shirt",
+        name: "Classic Oxford White Shirt",
         category: "Shirts",
-        price: 1250,
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500"
+        price: 1850,
+        oldPrice: 2200,
+        discount: "15% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600",
+        description: "Premium quality 100% cotton classic white oxford shirt designed for formal and casual wear."
     },
     {
         id: 2,
-        name: "SUNFEST Slate Blue Stripe Shirt",
+        name: "Casual Linen Sky Blue Shirt",
         category: "Shirts",
-        price: 1250,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500"
+        price: 1650,
+        oldPrice: 2000,
+        discount: "17% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+        description: "Lightweight and breathable linen fabric, perfect for summer casual outings."
     },
     {
         id: 3,
-        name: "SKYFALL Grey Pinstripe Shirt",
-        category: "Shirts",
-        price: 1250,
-        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500"
+        name: "Slim Fit Formal Black Pant",
+        category: "Pants",
+        price: 2400,
+        oldPrice: 3000,
+        discount: "20% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600",
+        description: "Tailored slim-fit formal trousers made with stretchable wrinkle-free fabric."
     },
     {
         id: 4,
-        name: "SKYFALL Jet Black Casual Shirt",
-        category: "Shirts",
-        price: 1250,
-        image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500"
-    },
-    {
-        id: 5,
-        name: "Classic Formal Brown Trouser",
+        name: "Casual Chino Pant - Khaki",
         category: "Pants",
-        price: 1650,
-        image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500"
-    },
-    {
-        id: 6,
-        name: "Slim Fit Stylish Denim Pant",
-        category: "Pants",
-        price: 1850,
-        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500"
+        price: 2100,
+        oldPrice: 2500,
+        discount: "16% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1473966968600-fa809b869a19?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+        description: "Versatile khaki chinos suitable for everyday casual and smart-casual looks."
     }
 ];
