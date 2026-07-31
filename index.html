@@ -10,20 +10,30 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* 1. Header & Navigation Section */
+        /* Header & Navigation */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; }
         .nav-left, .nav-right { display: flex; align-items: center; gap: 15px; }
         .logo { font-size: 22px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
         .nav-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #111; position: relative; }
         .cart-badge, .wishlist-badge { background-color: #111; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
 
-        /* Live Search Bar */
-        .search-container { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: center; }
-        .search-box { width: 100%; max-width: 600px; display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #fff; }
-        .search-box input { flex: 1; padding: 10px 15px; border: none; outline: none; font-size: 14px; }
+        /* Live Search Bar with Dropdown Suggestion */
+        .search-container { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: center; position: relative; z-index: 1500; }
+        .search-box-wrapper { width: 100%; max-width: 600px; position: relative; }
+        .search-box { width: 100%; display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #fff; }
+        .search-box input { flex: 1; padding: 10px 15px; border: none; outline: none; font-size: 14px; background: #fff; color: #333; }
         .search-box button { background: #111; color: #fff; border: none; padding: 0 20px; cursor: pointer; font-size: 14px; }
 
-        /* 2. Hero & Promotional Banner */
+        /* Search Suggestion Dropdown Box */
+        .search-suggestions { position: absolute; top: 100%; left: 0; width: 100%; background: #fff; border: 1px solid #ccc; border-top: none; max-height: 350px; overflow-y: auto; box-shadow: 0 8px 16px rgba(0,0,0,0.1); display: none; z-index: 1600; border-radius: 0 0 4px 4px; }
+        .search-suggestions.active { display: block; }
+        .suggestion-item { display: flex; align-items: center; gap: 12px; padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s; }
+        .suggestion-item:hover { background: #f5f5f5; }
+        .suggestion-item img { width: 40px; height: 50px; object-fit: cover; border-radius: 3px; }
+        .suggestion-info h4 { font-size: 13px; font-weight: 500; color: #111; margin-bottom: 3px; }
+        .suggestion-info p { font-size: 12px; font-weight: bold; color: #333; }
+
+        /* Hero Slider */
         .hero-slider { position: relative; width: 100%; height: 70vh; overflow: hidden; background-color: #111; }
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; color: white; padding-bottom: 60px; text-align: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; z-index: 1; }
         .slide.active { opacity: 1; visibility: visible; z-index: 2; }
@@ -38,13 +48,13 @@
         .trust-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
         .trust-item p { font-size: 11px; color: #666; }
 
-        .section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; background-color: #ffffff; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .section-title { font-size: 20px; font-weight: 600; }
         .view-all-btn { font-size: 12px; color: #555; border: 1px solid #ccc; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
         .view-all-btn:hover { background-color: #111; color: #fff; border-color: #111; }
 
-        /* 3. Product Catalog & Category Shortcuts */
+        /* Category Shortcuts */
         .category-grid { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px; scrollbar-width: none; }
         .category-grid::-webkit-scrollbar { display: none; }
         .category-item { flex: 0 0 auto; width: 110px; text-align: center; cursor: pointer; }
@@ -53,14 +63,15 @@
         .cat-img { width: 100%; height: 100%; object-fit: cover; }
         .cat-name { font-size: 13px; font-weight: 500; }
 
+        /* Product Grid & Cards (Fixed Image Aspect Ratio) */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
         
-        .product-card { background: #fff; border-radius: 6px; overflow: hidden; position: relative; border: 1px solid #eee; transition: 0.3s; }
+        .product-card { background: #fff; border-radius: 6px; overflow: hidden; position: relative; border: 1px solid #eee; transition: 0.3s; display: flex; flex-direction: column; }
         .product-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
         
-        .prod-img-wrap { width: 100%; height: 0; padding-bottom: 133%; position: relative; background-color: #f4f4f4; overflow: hidden; cursor: pointer; }
-        .prod-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease-in-out; }
+        .prod-img-wrap { width: 100%; aspect-ratio: 3 / 4; position: relative; background-color: #f4f4f4; overflow: hidden; cursor: pointer; }
+        .prod-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease-in-out; display: block; }
         .prod-img.hover-img { opacity: 0; }
         .product-card:hover .prod-img.main-img { opacity: 0; }
         .product-card:hover .prod-img.hover-img { opacity: 1; }
@@ -73,7 +84,7 @@
         .action-icon-btn { background: #fff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 14px; transition: 0.2s; }
         .action-icon-btn:hover { background: #111; color: #fff; }
 
-        .prod-details { padding: 12px; }
+        .prod-details { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .prod-category { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 3px; }
         .prod-title { font-size: 13px; font-weight: 500; color: #333; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .prod-price-box { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -91,7 +102,7 @@
         .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
         .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
 
-        /* Shopping Cart & Wishlist Drawer System */
+        /* Drawers */
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
         .drawer-overlay.active { visibility: visible; opacity: 1; }
         
@@ -134,11 +145,15 @@
         </div>
     </header>
 
-    <!-- Live Search Bar -->
+    <!-- Live Search Bar with Dropdown Suggestion -->
     <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Search for shirts, pants, collections..." onkeyup="filterProducts()">
-            <button onclick="filterProducts()">Search</button>
+        <div class="search-box-wrapper">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search for shirts, pants, collections..." onkeyup="handleSearchInput()" autocomplete="off">
+                <button onclick="triggerFullSearch()">Search</button>
+            </div>
+            <!-- Suggestion Dropdown List -->
+            <div class="search-suggestions" id="search-suggestions"></div>
         </div>
     </div>
 
@@ -272,7 +287,7 @@
             </div>
             <div class="form-group" id="trx-group" style="display: none;">
                 <label>Transaction ID (TrxID)</label>
-                <input type="text" id="cust-trx" placeholder="Enter your bKash/Nagad TrxID">
+                <input type="text" id="cust-cust-trx" placeholder="Enter your bKash/Nagad TrxID">
                 <small style="color: #666; font-size: 11px;">Send money to 01700000000 and enter TrxID</small>
             </div>
             <button type="submit" class="submit-order-btn">Confirm Order</button>
@@ -321,11 +336,13 @@
                             </div>
                         </div>
                         <div class="prod-details">
-                            <p class="prod-category">${product.category}</p>
-                            <h3 class="prod-title">${product.name}</h3>
-                            <div class="prod-price-box">
-                                <span class="prod-price">Tk ${product.price.toLocaleString()}.00</span>
-                                <span class="prod-old-price">Tk ${product.oldPrice.toLocaleString()}.00</span>
+                            <div>
+                                <p class="prod-category">${product.category}</p>
+                                <h3 class="prod-title">${product.name}</h3>
+                                <div class="prod-price-box">
+                                    <span class="prod-price">Tk ${product.price.toLocaleString()}.00</span>
+                                    <span class="prod-old-price">Tk ${product.oldPrice.toLocaleString()}.00</span>
+                                </div>
                             </div>
                             <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>
                         </div>
@@ -338,17 +355,71 @@
             renderProducts(products);
         }
 
-        function filterProducts() {
-            const query = document.getElementById('search-input').value.toLowerCase();
+        // Live Search with Dropdown Suggestions
+        function handleSearchInput() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const suggestionsBox = document.getElementById('search-suggestions');
+
+            if (query === "") {
+                suggestionsBox.classList.remove('active');
+                suggestionsBox.innerHTML = "";
+                renderProducts(products); // Reset main catalog
+                return;
+            }
+
             const filtered = products.filter(p => 
                 p.name.toLowerCase().includes(query) || 
                 p.category.toLowerCase().includes(query) ||
                 p.description.toLowerCase().includes(query)
             );
+
+            // Render Dropdown Suggestions
+            if (filtered.length > 0) {
+                suggestionsBox.classList.add('active');
+                suggestionsBox.innerHTML = "";
+                filtered.forEach(product => {
+                    suggestionsBox.innerHTML += `
+                        <div class="suggestion-item" onclick="selectSuggestion(${product.id})">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="suggestion-info">
+                                <h4>${product.name}</h4>
+                                <p>Tk ${product.price.toLocaleString()}.00</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                suggestionsBox.classList.add('active');
+                suggestionsBox.innerHTML = `<p style="padding: 12px; text-align: center; color: #777; font-size: 13px;">No suggestions found</p>`;
+            }
+
+            // Also filter the main catalog live
             renderProducts(filtered);
         }
 
+        function selectSuggestion(id) {
+            document.getElementById('search-suggestions').classList.remove('active');
+            openQuickView(id);
+        }
+
+        function triggerFullSearch() {
+            document.getElementById('search-suggestions').classList.remove('active');
+            const catalogSection = document.getElementById('product-grid');
+            if(catalogSection) {
+                catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Close search suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-box-wrapper')) {
+                document.getElementById('search-suggestions').classList.remove('active');
+            }
+        });
+
         function filterByCategory(category) {
+            document.getElementById('search-input').value = "";
+            document.getElementById('search-suggestions').classList.remove('active');
             if (category === 'All') {
                 document.getElementById('catalog-title').innerText = "Featured Catalog";
                 renderProducts(products);
