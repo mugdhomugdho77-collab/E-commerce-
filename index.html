@@ -315,6 +315,8 @@
             top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
             width: 90%; max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
             background: #fff;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -405,7 +407,7 @@
     <!-- --- Checkout Modal Form --- -->
     <div class="checkout-modal" id="checkout-modal">
         <button class="close-modal" id="close-checkout-btn">&times;</button>
-        <h2>Shipping Details</h2>
+        <h2>Checkout Details</h2>
         <form id="order-form" onsubmit="submitOrder(event)">
             <div class="form-group">
                 <label>Full Name</label>
@@ -427,6 +429,18 @@
                     <option value="XL">Extra Large (XL)</option>
                     <option value="XXL">Double XL (XXL)</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="payment-method" onchange="toggleTrxField()">
+                    <option value="COD">Cash on Delivery (COD)</option>
+                    <option value="bKash">bKash / Nagad (Online Payment)</option>
+                </select>
+            </div>
+            <div class="form-group" id="trx-group" style="display: none;">
+                <label>Transaction ID (TrxID)</label>
+                <input type="text" id="cust-trx" placeholder="Enter your bKash/Nagad TrxID">
+                <small style="color: #666; font-size: 11px;">Send money to 01700000000 and enter TrxID</small>
             </div>
             <button type="submit" class="submit-order-btn">Confirm Order</button>
         </form>
@@ -617,6 +631,16 @@
             cartOverlay.classList.remove('active');
         });
 
+        function toggleTrxField() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const trxGroup = document.getElementById('trx-group');
+            if (paymentMethod === 'bKash') {
+                trxGroup.style.display = 'block';
+            } else {
+                trxGroup.style.display = 'none';
+            }
+        }
+
         function submitOrder(e) {
             e.preventDefault();
             alert("Order placed successfully! Thank you for shopping with Bazeline.");
@@ -624,6 +648,8 @@
             updateCartUI();
             checkoutModal.classList.remove('active');
             cartOverlay.classList.remove('active');
+            document.getElementById('order-form').reset();
+            document.getElementById('trx-group').style.display = 'none';
         }
 
         window.onload = loadProducts;
