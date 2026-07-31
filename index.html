@@ -62,7 +62,7 @@
             border-radius: 10px;
         }
 
-        /* --- Hero Section with Your Photo --- */
+        /* --- Hero Section --- */
         .hero {
             position: relative;
             width: 100%;
@@ -140,7 +140,7 @@
             border-color: #111;
         }
 
-        /* --- Shop by Category (Circle Grid) --- */
+        /* --- Shop by Category --- */
         .category-grid {
             display: flex;
             overflow-x: auto;
@@ -241,6 +241,54 @@
         }
         .add-to-cart-btn:hover {
             background-color: #333;
+        }
+
+        /* --- Search Overlay & Modal --- */
+        .search-modal {
+            position: fixed;
+            top: -100%; left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: top 0.4s ease;
+            z-index: 2500;
+            padding: 25px 20px;
+        }
+        .search-modal.active {
+            top: 0;
+        }
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-input-box {
+            width: 100%;
+            padding: 15px 40px 15px 15px;
+            font-size: 18px;
+            border: 2px solid #111;
+            border-radius: 4px;
+            outline: none;
+        }
+        .close-search {
+            position: absolute;
+            right: 15px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            font-size: 24px; cursor: pointer;
+        }
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        @media (min-width: 768px) {
+            .search-results-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         /* --- Cart Drawer --- */
@@ -376,7 +424,7 @@
     <header class="header">
         <div class="nav-left">
             <button class="nav-icon-btn">☰ Menu</button>
-            <button class="nav-icon-btn">🔍 Search</button>
+            <button class="nav-icon-btn" id="search-open-btn">🔍 Search</button>
         </div>
         <div class="logo">Bazeline</div>
         <div class="nav-right">
@@ -384,6 +432,17 @@
             <button class="nav-icon-btn" id="cart-btn">🛒 Bag <span class="cart-badge" id="cart-count">0</span></button>
         </div>
     </header>
+
+    <!-- --- Live Search Modal --- -->
+    <div class="search-modal" id="search-modal">
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input-box" placeholder="Search for shirts, pants..." oninput="liveSearch()">
+            <button class="close-search" id="search-close-btn">&times;</button>
+            <div class="search-results-grid" id="search-results-container">
+                <!-- রিয়েল-টাইম সার্চ রেজাল্ট এখানে দেখাবে -->
+            </div>
+        </div>
+    </div>
 
     <!-- --- Cart Drawer --- -->
     <div class="cart-overlay" id="cart-overlay"></div>
@@ -545,6 +604,37 @@
             });
         }
 
+        // Live Search Function
+        function liveSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results-container');
+            resultsContainer.innerHTML = "";
+
+            if (query.trim() === "") return;
+
+            const filteredProducts = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+
+            if (filteredProducts.length === 0) {
+                resultsContainer.innerHTML = `<p style="grid-column: span 4; text-align: center; color: #777;">No products found</p>`;
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                resultsContainer.innerHTML += `
+                    <div class="product-card">
+                        <div class="prod-img-wrap">
+                            <img src="${product.image}" alt="${product.name}" class="prod-img">
+                        </div>
+                        <div class="prod-details">
+                            <h3 class="prod-title">${product.name}</h3>
+                            <p class="prod-price">Tk ${product.price.toLocaleString()}.00</p>
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (product) {
@@ -591,6 +681,14 @@
 
             cartTotalPrice.innerText = `Tk ${total.toLocaleString()}.00`;
         }
+
+        // Modal Controls
+        const searchModal = document.getElementById('search-modal');
+        const searchOpenBtn = document.getElementById('search-open-btn');
+        const searchCloseBtn = document.getElementById('search-close-btn');
+
+        searchOpenBtn.addEventListener('click', () => searchModal.classList.add('active'));
+        searchCloseBtn.addEventListener('click', () => searchModal.classList.remove('active'));
 
         const cartBtn = document.getElementById('cart-btn');
         const closeCartBtn = document.getElementById('close-cart');
