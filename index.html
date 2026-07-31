@@ -83,11 +83,13 @@
             padding-bottom: 60px;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
             z-index: 1;
         }
         .slide.active {
             opacity: 1;
+            visibility: visible;
             z-index: 2;
         }
         .slide::before {
@@ -694,7 +696,15 @@
 
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
-            currentSlide = (index + slides.length) % slides.length;
+            
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+            
             slides[currentSlide].classList.add('active');
         }
 
