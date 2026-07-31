@@ -31,8 +31,8 @@ const products = [
         oldPrice: 2900,
         discount: "17% OFF",
         stock: "In Stock",
-        image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
-        hoverImage: "https://images.unsplash.com/photo-1473966968600-fa809b869a1a?w=600",
+        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600",
         description: "Elegant slim-fit black formal trousers tailored for office wear and formal events."
     },
     {
@@ -43,8 +43,8 @@ const products = [
         oldPrice: 2500,
         discount: "16% OFF",
         stock: "In Stock",
-        image: "https://images.unsplash.com/photo-1473966968600-fa809b869a1a?w=600",
-        hoverImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+        image: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
         description: "Comfortable stretchable khaki chino pants suitable for everyday casual styling."
     },
     {
