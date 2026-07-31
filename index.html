@@ -309,43 +309,9 @@
             <h2 class="section-title">New Shirts Collection</h2>
             <a href="#" class="view-all-btn">View All</a>
         </div>
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">SUNFEST Off White Pinstripe Shirt</h3>
-                    <p class="prod-price">Tk 1,250.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">SUNFEST Slate Blue Stripe Shirt</h3>
-                    <p class="prod-price">Tk 1,250.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">SKYFALL Grey Pinstripe Shirt</h3>
-                    <p class="prod-price">Tk 1,250.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=500" alt="Shirt" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">SKYFALL Jet Black Casual Shirt</h3>
-                    <p class="prod-price">Tk 1,250.00</p>
-                </div>
-            </div>
+        <!-- এখানে শার্টের গ্রিড আইডি বসানো হলো -->
+        <div class="product-grid" id="shirts-grid">
+            <!-- products.js থেকে ডেটা এখানে স্বয়ংক্রিয়ভাবে লোড হবে -->
         </div>
     </section>
 
@@ -355,43 +321,9 @@
             <h2 class="section-title">Trending Pants</h2>
             <a href="#" class="view-all-btn">View All</a>
         </div>
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">Classic Formal Brown Trouser</h3>
-                    <p class="prod-price">Tk 1,650.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">Slim Fit Stylish Denim Pant</h3>
-                    <p class="prod-price">Tk 1,850.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">Casual Cargo Olive Pant</h3>
-                    <p class="prod-price">Tk 1,750.00</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="prod-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1473966968600-fa809b869a1c?auto=format&fit=crop&q=80&w=500" alt="Pants" class="prod-img">
-                </div>
-                <div class="prod-details">
-                    <h3 class="prod-title">Chino Stretch Fit Black Pant</h3>
-                    <p class="prod-price">Tk 1,550.00</p>
-                </div>
-            </div>
+        <!-- এখানে প্যান্টের গ্রিড আইডি বসানো হলো -->
+        <div class="product-grid" id="pants-grid">
+            <!-- products.js থেকে ডেটা এখানে স্বয়ংক্রিয়ভাবে লোড হবে -->
         </div>
     </section>
 
@@ -401,8 +333,43 @@
         <p>Designed for Professional E-commerce Experience</p>
     </footer>
 
-    <!-- JS ফাইল কানেক্ট করা হলো -->
+    <!-- --- External Data File --- -->
     <script src="products.js"></script>
+
+    <!-- --- Dynamic Product Rendering Script --- -->
+    <script>
+        function loadProducts() {
+            const shirtsGrid = document.getElementById('shirts-grid');
+            const pantsGrid = document.getElementById('pants-grid');
+
+            if (!shirtsGrid || !pantsGrid) return;
+
+            shirtsGrid.innerHTML = "";
+            pantsGrid.innerHTML = "";
+
+            products.forEach(product => {
+                const productHTML = `
+                    <div class="product-card">
+                        <div class="prod-img-wrap">
+                            <img src="${product.image}" alt="${product.name}" class="prod-img">
+                        </div>
+                        <div class="prod-details">
+                            <h3 class="prod-title">${product.name}</h3>
+                            <p class="prod-price">Tk ${product.price.toLocaleString()}.00</p>
+                        </div>
+                    </div>
+                `;
+
+                if (product.category === "Shirts") {
+                    shirtsGrid.innerHTML += productHTML;
+                } else if (product.category === "Pants") {
+                    pantsGrid.innerHTML += productHTML;
+                }
+            });
+        }
+
+        window.onload = loadProducts;
+    </script>
 
 </body>
 </html>
