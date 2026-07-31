@@ -5,20 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bazeline - Premium Menswear</title>
     <style>
-        /* --- General Reset & Fonts --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff; color: #333; line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* --- Header --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; }
         .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; }
         .logo { font-size: 22px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
         .nav-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: #111; }
         .cart-badge { background-color: #111; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
 
-        /* --- Hero Slider --- */
         .hero-slider { position: relative; width: 100%; height: 70vh; overflow: hidden; background-color: #111; }
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; color: white; padding-bottom: 60px; text-align: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; z-index: 1; }
         .slide.active { opacity: 1; visibility: visible; z-index: 2; }
@@ -29,19 +26,16 @@
         .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4); color: white; border: none; padding: 12px 15px; cursor: pointer; z-index: 10; font-size: 18px; }
         .prev-slide { left: 15px; } .next-slide { right: 15px; }
 
-        /* --- Trust Badges --- */
         .trust-badges { display: grid; grid-template-columns: repeat(3, 1fr); background-color: #f9f9f9; border-bottom: 1px solid #e5e5e5; padding: 20px 10px; text-align: center; }
         .trust-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
         .trust-item p { font-size: 11px; color: #666; }
 
-        /* --- Sections & Catalog --- */
         .section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .section-title { font-size: 20px; font-weight: 600; }
         .view-all-btn { font-size: 12px; color: #555; border: 1px solid #ccc; padding: 6px 15px; border-radius: 4px; }
         .view-all-btn:hover { background-color: #111; color: #fff; border-color: #111; }
 
-        /* --- Category Shortcuts --- */
         .category-grid { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px; scrollbar-width: none; }
         .category-grid::-webkit-scrollbar { display: none; }
         .category-item { flex: 0 0 auto; width: 110px; text-align: center; }
@@ -49,7 +43,6 @@
         .cat-img { width: 100%; height: 100%; object-fit: cover; }
         .cat-name { font-size: 13px; font-weight: 500; }
 
-        /* --- Professional Product Cards (Point 3) --- */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
         
@@ -62,7 +55,6 @@
         .product-card:hover .prod-img.main-img { opacity: 0; }
         .product-card:hover .prod-img.hover-img { opacity: 1; }
 
-        /* Badges & Actions Overlay on Image */
         .badge-discount { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 3px; z-index: 3; }
         .badge-stock { position: absolute; top: 10px; right: 10px; background: #43a047; color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 3px; z-index: 3; }
         
@@ -81,7 +73,7 @@
         .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 8px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* --- Quick View Modal --- */
+        /* Quick View */
         .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; }
         .quick-view-modal.active { display: flex; }
         .quick-view-content { background: #fff; width: 90%; max-width: 750px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 6px; overflow: hidden; position: relative; }
@@ -89,7 +81,7 @@
         .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
         .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
 
-        /* --- Cart & Footer Styles --- */
+        /* Cart Drawer */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
         .cart-overlay.active { visibility: visible; opacity: 1; }
         .cart-drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
@@ -101,12 +93,22 @@
         .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #f9f9f9; }
         .cart-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
         .checkout-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; }
+
+        /* Checkout Modal */
+        .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
+        .checkout-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .checkout-modal h2 { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; margin-bottom: 5px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; }
+
         .footer { background-color: #111; color: #aaa; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <!-- --- Header --- -->
     <header class="header">
         <div class="nav-left">
             <button class="nav-icon-btn">☰ Menu</button>
@@ -117,7 +119,7 @@
         </div>
     </header>
 
-    <!-- --- Cart Drawer --- -->
+    <!-- Cart Drawer -->
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
@@ -132,18 +134,49 @@
                 <span>Subtotal:</span>
                 <span id="cart-total-price">Tk 0.00</span>
             </div>
-            <button class="checkout-btn">Proceed to Checkout</button>
+            <button class="checkout-btn" id="open-checkout-btn">Proceed to Checkout</button>
         </div>
     </div>
 
-    <!-- --- Quick View Modal --- -->
+    <!-- Checkout Modal Form -->
+    <div class="checkout-modal" id="checkout-modal">
+        <button class="close-modal" id="close-checkout-btn">&times;</button>
+        <h2>Checkout Details</h2>
+        <form id="order-form" onsubmit="submitOrder(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="cust-name" required placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="cust-phone" required placeholder="Enter your phone number">
+            </div>
+            <div class="form-group">
+                <label>Delivery Address</label>
+                <input type="text" id="cust-address" required placeholder="House, Road, Area, City">
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="payment-method" onchange="toggleTrxField()">
+                    <option value="COD">Cash on Delivery (COD)</option>
+                    <option value="bKash">bKash / Nagad (Online Payment)</option>
+                </select>
+            </div>
+            <div class="form-group" id="trx-group" style="display: none;">
+                <label>Transaction ID (TrxID)</label>
+                <input type="text" id="cust-trx" placeholder="Enter your bKash/Nagad TrxID">
+                <small style="color: #666; font-size: 11px;">Send money to 01700000000 and enter TrxID</small>
+            </div>
+            <button type="submit" class="submit-order-btn">Confirm Order</button>
+        </form>
+    </div>
+
+    <!-- Quick View Modal -->
     <div class="quick-view-modal" id="quick-view-modal">
-        <div class="quick-view-content" id="quick-view-body">
-            <!-- Dynamically populated -->
-        </div>
+        <div class="quick-view-content" id="quick-view-body"></div>
     </div>
 
-    <!-- --- Hero Section --- -->
+    <!-- Hero Section -->
     <section class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600');">
             <div class="hero-content">
@@ -161,7 +194,7 @@
         <button class="slider-arrow next-slide" onclick="changeSlide(1)">&#10095;</button>
     </section>
 
-    <!-- --- Trust Badges --- -->
+    <!-- Trust Badges -->
     <div class="trust-badges">
         <div class="trust-item">
             <h4>Free Delivery</h4>
@@ -177,24 +210,7 @@
         </div>
     </div>
 
-    <!-- --- Shop by Category --- -->
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">Shop by Category</h2>
-        </div>
-        <div class="category-grid">
-            <a href="#" class="category-item">
-                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300" alt="Shirts" class="cat-img"></div>
-                <span class="cat-name">Shirts</span>
-            </a>
-            <a href="#" class="category-item">
-                <div class="cat-circle"><img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=300" alt="Pants" class="cat-img"></div>
-                <span class="cat-name">Pants</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- --- Product Catalog (Point 3 Full Implementation) --- -->
+    <!-- Product Catalog -->
     <section class="section">
         <div class="section-header">
             <h2 class="section-title">Featured Catalog</h2>
@@ -203,15 +219,11 @@
         <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- --- Footer --- -->
     <footer class="footer">
         <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
     </footer>
 
-    <!-- External Products Data File -->
     <script src="products.js"></script>
-
-    <!-- JavaScript logic for Catalog & Interactive Features -->
     <script>
         let cart = [];
 
@@ -247,7 +259,6 @@
             });
         }
 
-        // Quick View Modal Function
         function openQuickView(id) {
             const product = products.find(p => p.id === id);
             const modal = document.getElementById('quick-view-modal');
@@ -275,7 +286,6 @@
             btn.style.color = btn.style.color === 'red' ? '#111' : 'red';
         }
 
-        // Cart Actions
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
@@ -308,18 +318,58 @@
             document.getElementById('cart-total-price').innerText = `Tk ${total.toLocaleString()}.00`;
         }
 
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const checkoutModal = document.getElementById('checkout-modal');
+
         function openCart() {
-            document.getElementById('cart-drawer').classList.add('active');
-            document.getElementById('cart-overlay').classList.add('active');
+            cartDrawer.classList.add('active');
+            cartOverlay.classList.add('active');
         }
-        
+
+        function closeCart() {
+            cartDrawer.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        }
+
         document.getElementById('cart-btn').addEventListener('click', openCart);
-        document.getElementById('close-cart').addEventListener('click', () => {
-            document.getElementById('cart-drawer').classList.remove('active');
-            document.getElementById('cart-overlay').classList.remove('active');
+        document.getElementById('close-cart').addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', () => {
+            closeCart();
+            checkoutModal.classList.remove('active');
         });
 
-        // Hero Slider Controls
+        document.getElementById('open-checkout-btn').addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert("Your bag is empty!");
+                return;
+            }
+            closeCart();
+            checkoutModal.classList.add('active');
+        });
+
+        document.getElementById('close-checkout-btn').addEventListener('click', () => {
+            checkoutModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+
+        function toggleTrxField() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const trxGroup = document.getElementById('trx-group');
+            trxGroup.style.display = (paymentMethod === 'bKash') ? 'block' : 'none';
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            alert("Order placed successfully! Thank you for shopping with Bazeline.");
+            cart = [];
+            updateCartUI();
+            checkoutModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+            document.getElementById('order-form').reset();
+            document.getElementById('trx-group').style.display = 'none';
+        }
+
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         function changeSlide(dir) {
