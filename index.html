@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store with Custom Payment</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
+        .container { max-width: 600px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: auto; }
+        h2 { color: #333; text-align: center; }
+        .product { border-bottom: 1px solid #ddd; padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #45a049; }
+        .checkout-box { margin-top: 20px; padding: 15px; background: #eef2f3; border-radius: 5px; display: none; }
+        input, select { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Online Store</h2>
+    
+    <!-- Product Item -->
+    <div class="product">
+        <div>
+            <h3>Export Quality Dress</h3>
+            <p>Price: 1500 BDT</p>
+        </div>
+        <button class="btn" onclick="openCheckout()">Buy Now</button>
+    </div>
+
+    <!-- Checkout Form with Custom Payment (Alternative to Merchant Gateway) -->
+    <div id="checkoutBox" class="checkout-box">
+        <h3>Checkout & Payment</h3>
+        <p>Send money via bKash/Nagad Personal (01700000000) and provide TrxID below:</p>
+        
+        <label>Your Name:</label>
+        <input type="text" id="custName" placeholder="Enter your name">
+        
+        <label>Your Phone Number:</label>
+        <input type="text" id="custPhone" placeholder="01XXXXXXXXX">
+        
+        <label>Payment Method:</label>
+        <select id="payMethod">
+            <option value="bKash">bKash Personal</option>
+            <option value="Nagad">Nagad Personal</option>
+        </select>
+
+        <label>Transaction ID (TrxID):</label>
+        <input type="text" id="trxId" placeholder="e.g., 9H87G6F5">
+
+        <button class="btn" style="width:100%; margin-top: 10px;" onclick="submitOrder()">Confirm Order</button>
+    </div>
+</div>
+
+<script>
+    function openCheckout() {
+        document.getElementById('checkoutBox').style.display = 'block';
+    }
+
+    function submitOrder() {
+        let name = document.getElementById('custName').value;
+        let phone = document.getElementById('custPhone').value;
+        let trx = document.getElementById('trxId').value;
+
+        if(!name || !phone || !trx) {
+            alert('Please fill up all fields!');
+            return;
+        }
+
+        alert('Order submitted successfully! Admin will verify your TrxID and confirm soon.');
+        document.getElementById('checkoutBox').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
