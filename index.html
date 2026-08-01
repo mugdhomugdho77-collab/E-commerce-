@@ -96,16 +96,53 @@
         .prod-price { font-size: 14px; font-weight: bold; color: #111; }
         .prod-old-price { font-size: 12px; color: #999; text-decoration: line-through; }
         
-        .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 8px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 9px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* Quick View Modal */
-        .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; }
-        .quick-view-modal.active { display: flex; }
-        .quick-view-content { background: #fff; width: 90%; max-width: 750px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 6px; overflow: hidden; position: relative; }
-        .qv-img { width: 100%; height: 100%; object-fit: cover; }
-        .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
-        .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
+        /* Step 5: Advanced Product Details Modal / Page Styles */
+        .product-detail-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 3500; padding: 20px; }
+        .product-detail-modal.active { display: flex; }
+        .pdm-content { background: #fff; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        @media(max-width: 768px) { .pdm-content { grid-template-columns: 1fr; max-height: 95vh; } }
+        
+        .pdm-gallery { padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #fafafa; }
+        .pdm-main-img-wrap { width: 100%; aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; background: #eee; }
+        .pdm-main-img { width: 100%; height: 100%; object-fit: cover; }
+        .pdm-thumbs { display: flex; gap: 10px; overflow-x: auto; }
+        .pdm-thumb { width: 60px; height: 75px; border-radius: 4px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.7; transition: 0.2s; flex-shrink: 0; }
+        .pdm-thumb.active, .pdm-thumb:hover { border-color: #111; opacity: 1; }
+        .pdm-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        .pdm-info-side { padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+        .close-pdm { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; z-index: 10; }
+        
+        .pdm-category { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .pdm-title { font-size: 22px; font-weight: 600; color: #111; margin-bottom: 10px; }
+        .pdm-price-box { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .pdm-price { font-size: 20px; font-weight: bold; color: #111; }
+        .pdm-old-price { font-size: 14px; color: #999; text-decoration: line-through; }
+        .pdm-desc { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+
+        /* Variant Selectors (Size & Color) */
+        .variant-section { margin-bottom: 15px; }
+        .variant-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #333; }
+        .size-options, .color-options { display: flex; gap: 8px; }
+        .size-btn { border: 1px solid #ccc; background: #fff; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; transition: 0.2s; }
+        .size-btn.active { background: #111; color: #fff; border-color: #111; }
+        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid #ddd; transition: 0.2s; }
+        .color-dot.active { border-color: #111; transform: scale(1.1); }
+
+        /* Quantity Counter */
+        .qty-cart-row { display: flex; gap: 12px; align-items: center; margin-top: 15px; }
+        .qty-counter { display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #fff; }
+        .qty-btn { background: #f4f4f4; border: none; padding: 10px 14px; cursor: pointer; font-size: 14px; }
+        .qty-input { width: 40px; text-align: center; border: none; font-size: 14px; outline: none; }
+
+        /* Reviews & Ratings Section */
+        .pdm-reviews-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+        .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
+        .stars { color: #f39c12; font-size: 14px; }
+        .review-item { font-size: 12px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 4px; margin-bottom: 6px; }
 
         /* Drawers */
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
@@ -232,7 +269,7 @@
             <a href="#" class="view-all-btn" onclick="resetAllFilters(); return false;">View All</a>
         </div>
 
-        <!-- Filter & Sorting Bar (Step 4 Implementation) -->
+        <!-- Filter & Sorting Bar -->
         <div class="filter-sort-bar">
             <div class="filter-group">
                 <select id="categoryFilter" class="filter-select" onchange="applyFilterAndSort()">
@@ -326,9 +363,9 @@
         </form>
     </div>
 
-    <!-- Quick View Modal -->
-    <div class="quick-view-modal" id="quick-view-modal">
-        <div class="quick-view-content" id="quick-view-body"></div>
+    <!-- Step 5: Advanced Product Detail Modal (Gallery, Sizes, Colors, Qty, Reviews) -->
+    <div class="product-detail-modal" id="product-detail-modal">
+        <div class="pdm-content" id="pdm-modal-body"></div>
     </div>
 
     <!-- Footer -->
@@ -338,8 +375,90 @@
         <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
     </footer>
 
-    <script src="products.js"></script>
+    <!-- Products Data (Extended with multiple images, sizes, colors, reviews) -->
     <script>
+        const products = [
+            {
+                id: 1,
+                name: "Premium Casual Oxford Shirt",
+                category: "Shirts",
+                price: 1450,
+                oldPrice: 1950,
+                discount: "25% OFF",
+                stock: "In Stock",
+                description: "Crafted from 100% premium cotton, this Oxford shirt offers supreme comfort and a tailored modern fit suitable for formal and casual occasions.",
+                images: [
+                    "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
+                    "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+                    "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600"
+                ],
+                sizes: ["M", "L", "XL", "XXL"],
+                colors: ["#2c3e50", "#ffffff", "#34495e"],
+                reviews: [
+                    { name: "Rahim Ahmed", rating: 5, comment: "Amazing fabric quality and perfect fitting!" },
+                    { name: "Tanvir Hasan", rating: 4, comment: "Good product, fast delivery." }
+                ]
+            },
+            {
+                id: 2,
+                name: "Slim Fit Chino Pants",
+                category: "Pants",
+                price: 1850,
+                oldPrice: 2400,
+                discount: "22% OFF",
+                stock: "In Stock",
+                description: "Versatile stretch chino trousers designed for all-day comfort. Features a sleek modern slim cut and durable stitching.",
+                images: [
+                    "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+                    "https://images.unsplash.com/photo-1473966968600-fa809b869a1e?w=600",
+                    "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600"
+                ],
+                sizes: ["30", "32", "34", "36"],
+                colors: ["#d35400", "#7f8c8d", "#111111"],
+                reviews: [
+                    { name: "Imran Khan", rating: 5, comment: "Very comfortable stretch material." }
+                ]
+            },
+            {
+                id: 3,
+                name: "Executive Festive Kurta",
+                category: "Kurtas",
+                price: 2150,
+                oldPrice: 2800,
+                discount: "23% OFF",
+                stock: "In Stock",
+                description: "Traditional yet contemporary festive kurta crafted with premium breathable cotton-silk blend fabric and subtle embroidery.",
+                images: [
+                    "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",
+                    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600"
+                ],
+                sizes: ["M", "L", "XL"],
+                colors: ["#ecf0f1", "#e67e22", "#27ae60"],
+                reviews: [
+                    { name: "Shahriar Alom", rating: 5, comment: "Perfect for Eid and family occasions!" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Minimalist Black Cotton T-Shirt",
+                category: "T-Shirts",
+                price: 750,
+                oldPrice: 1100,
+                discount: "30% OFF",
+                stock: "In Stock",
+                description: "Ultra-soft combed cotton everyday streetwear t-shirt with a clean minimalist aesthetic and durable rib-knit collar.",
+                images: [
+                    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
+                    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600"
+                ],
+                sizes: ["S", "M", "L", "XL"],
+                colors: ["#111111", "#bdc3c7", "#2980b9"],
+                reviews: [
+                    { name: "Nayeem Islam", rating: 4, comment: "Super soft cloth, value for money." }
+                ]
+            }
+        ];
+
         let cart = [];
         let wishlist = [];
 
@@ -359,12 +478,12 @@
                     <div class="product-card">
                         <span class="badge-discount">${product.discount}</span>
                         <span class="badge-stock">${product.stock}</span>
-                        <div class="prod-img-wrap" onclick="openQuickView(${product.id})">
-                            <img src="${product.image}" alt="${product.name}" class="prod-img main-img">
-                            <img src="${product.hoverImage}" alt="${product.name}" class="prod-img hover-img">
+                        <div class="prod-img-wrap" onclick="openProductDetail(${product.id})">
+                            <img src="${product.images[0]}" alt="${product.name}" class="prod-img main-img">
+                            <img src="${product.images[1] || product.images[0]}" alt="${product.name}" class="prod-img hover-img">
                             <div class="card-actions">
                                 <button class="action-icon-btn" style="color: ${isWishlisted ? 'red' : '#111'}" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)" title="Wishlist">❤️</button>
-                                <button class="action-icon-btn" onclick="event.stopPropagation(); openQuickView(${product.id})" title="Quick View">👁️</button>
+                                <button class="action-icon-btn" onclick="event.stopPropagation(); openProductDetail(${product.id})" title="Quick View / Details">👁️</button>
                             </div>
                         </div>
                         <div class="prod-details">
@@ -376,7 +495,7 @@
                                     <span class="prod-old-price">Tk ${product.oldPrice.toLocaleString()}.00</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>
+                            <button class="add-to-cart-btn" onclick="openProductDetail(${product.id})">Select Options</button>
                         </div>
                     </div>
                 `;
@@ -387,13 +506,12 @@
             renderProducts(products);
         }
 
-        // Combined Filter & Sorting Logic (Step 4)
+        // Combined Filter & Sorting Logic
         function applyFilterAndSort() {
             const selectedCategory = document.getElementById('categoryFilter').value;
             const selectedPrice = document.getElementById('priceFilter').value;
             const sortValue = document.getElementById('sortDropdown').value;
 
-            // Update title based on category dropdown
             if (selectedCategory === 'All') {
                 document.getElementById('catalog-title').innerText = "Featured Catalog";
             } else {
@@ -415,7 +533,6 @@
                 return matchesCategory && matchesPrice;
             });
 
-            // Sorting
             if (sortValue === 'low-high') {
                 filtered.sort((a, b) => a.price - b.price);
             } else if (sortValue === 'high-low') {
@@ -464,7 +581,7 @@
                 filtered.forEach(product => {
                     suggestionsBox.innerHTML += `
                         <div class="suggestion-item" onclick="selectSuggestion(${product.id})">
-                            <img src="${product.image}" alt="${product.name}">
+                            <img src="${product.images[0]}" alt="${product.name}">
                             <div class="suggestion-info">
                                 <h4>${product.name}</h4>
                                 <p>Tk ${product.price.toLocaleString()}.00</p>
@@ -482,7 +599,7 @@
 
         function selectSuggestion(id) {
             document.getElementById('search-suggestions').classList.remove('active');
-            openQuickView(id);
+            openProductDetail(id);
         }
 
         function triggerFullSearch() {
@@ -499,29 +616,146 @@
             }
         });
 
-        function openQuickView(id) {
+        // ==========================================
+        // Step 5: Product Details Modal Logic (A-Z)
+        // ==========================================
+        let selectedSize = "";
+        let selectedColor = "";
+
+        function openProductDetail(id) {
             const product = products.find(p => p.id === id);
-            const modal = document.getElementById('quick-view-modal');
-            const body = document.getElementById('quick-view-body');
-            
+            const modal = document.getElementById('product-detail-modal');
+            const body = document.getElementById('pdm-modal-body');
+
+            selectedSize = product.sizes[0];
+            selectedColor = product.colors[0];
+
+            let thumbsHtml = "";
+            product.images.forEach((img, index) => {
+                thumbsHtml += `
+                    <div class="pdm-thumb ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this)">
+                        <img src="${img}" alt="thumb">
+                    </div>
+                `;
+            });
+
+            let sizesHtml = "";
+            product.sizes.forEach((size, index) => {
+                sizesHtml += `<button class="size-btn ${index === 0 ? 'active' : ''}" onclick="selectSizeOpt('${size}', this)">${size}</button>`;
+            });
+
+            let colorsHtml = "";
+            product.colors.forEach((col, index) => {
+                colorsHtml += `<div class="color-dot ${index === 0 ? 'active' : ''}" style="background-color: ${col};" onclick="selectColorOpt('${col}', this)"></div>`;
+            });
+
+            let reviewsHtml = "";
+            product.reviews.forEach(rev => {
+                reviewsHtml += `
+                    <div class="review-item">
+                        <strong>${rev.name}</strong> <span class="stars">${'★'.repeat(rev.rating)}</span>
+                        <p>${rev.comment}</p>
+                    </div>
+                `;
+            });
+
             body.innerHTML = `
-                <button class="close-qv" onclick="closeQuickView()">&times;</button>
-                <img src="${product.image}" alt="${product.name}" class="qv-img">
-                <div class="qv-details">
-                    <p style="font-size: 12px; color: #888; text-transform: uppercase;">${product.category}</p>
-                    <h2 style="font-size: 20px; margin: 5px 0 10px 0;">${product.name}</h2>
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Tk ${product.price.toLocaleString()}.00</div>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 20px;">${product.description}</p>
-                    <button class="add-to-cart-btn" onclick="addToCart(${product.id}); closeQuickView();">Add to Bag</button>
+                <button class="close-pdm" onclick="closeProductDetail()">&times;</button>
+                <div class="pdm-gallery">
+                    <div class="pdm-main-img-wrap">
+                        <img src="${product.images[0]}" alt="${product.name}" class="pdm-main-img" id="pdm-active-img">
+                    </div>
+                    <div class="pdm-thumbs">${thumbsHtml}</div>
+                </div>
+                <div class="pdm-info-side">
+                    <div>
+                        <p class="pdm-category">${product.category}</p>
+                        <h2 class="pdm-title">${product.name}</h2>
+                        <div class="pdm-price-box">
+                            <span class="pdm-price">Tk ${product.price.toLocaleString()}.00</span>
+                            <span class="pdm-old-price">Tk ${product.oldPrice.toLocaleString()}.00</span>
+                        </div>
+                        <p class="pdm-desc">${product.description}</p>
+                        
+                        <div class="variant-section">
+                            <div class="variant-title">Select Size:</div>
+                            <div class="size-options">${sizesHtml}</div>
+                        </div>
+
+                        <div class="variant-section">
+                            <div class="variant-title">Select Color:</div>
+                            <div class="color-options">${colorsHtml}</div>
+                        </div>
+
+                        <div class="qty-cart-row">
+                            <div class="qty-counter">
+                                <button class="qty-btn" onclick="adjustQty(-1)">-</button>
+                                <input type="text" id="pdm-qty-input" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="adjustQty(1)">+</button>
+                            </div>
+                            <button class="add-to-cart-btn" style="flex: 1;" onclick="addWithOptionsToCart(${product.id})">Add to Bag</button>
+                        </div>
+                    </div>
+
+                    <div class="pdm-reviews-section">
+                        <div class="reviews-header">
+                            <span>Customer Reviews</span>
+                            <span class="stars">★★★★★</span>
+                        </div>
+                        ${reviewsHtml}
+                    </div>
                 </div>
             `;
             modal.classList.add('active');
         }
 
-        function closeQuickView() {
-            document.getElementById('quick-view-modal').classList.remove('active');
+        function changeMainImage(imgSrc, thumbEl) {
+            document.getElementById('pdm-active-img').src = imgSrc;
+            document.querySelectorAll('.pdm-thumb').forEach(t => t.classList.remove('active'));
+            thumbEl.classList.add('active');
         }
 
+        function selectSizeOpt(size, btn) {
+            selectedSize = size;
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function selectColorOpt(color, dot) {
+            selectedColor = color;
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+        }
+
+        function adjustQty(val) {
+            const input = document.getElementById('pdm-qty-input');
+            let current = parseInt(input.value) + val;
+            if (current >= 1 && current <= 10) {
+                input.value = current;
+            }
+        }
+
+        function closeProductDetail() {
+            document.getElementById('product-detail-modal').classList.remove('active');
+        }
+
+        function addWithOptionsToCart(id) {
+            const product = products.find(p => p.id === id);
+            const qty = parseInt(document.getElementById('pdm-qty-input').value);
+            
+            for (let i = 0; i < qty; i++) {
+                cart.push({
+                    ...product,
+                    selectedSize: selectedSize,
+                    selectedColor: selectedColor
+                });
+            }
+            updateCartUI();
+            closeProductDetail();
+            openCart();
+        }
+
+        // Wishlist & Cart Management
         function toggleWishlist(id, btn) {
             const product = products.find(p => p.id === id);
             const index = wishlist.findIndex(item => item.id === id);
@@ -547,22 +781,19 @@
             wishlist.forEach((item) => {
                 container.innerHTML += `
                     <div class="drawer-item">
-                        <img src="${item.image}" alt="${item.name}">
+                        <img src="${item.images[0]}" alt="${item.name}">
                         <div style="flex: 1;">
                             <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name}</h4>
                             <p style="font-size: 13px; font-weight: bold;">Tk ${item.price.toLocaleString()}.00</p>
                         </div>
-                        <button onclick="addToCart(${item.id});" style="background:#111;color:#fff;border:none;padding:5px 8px;font-size:11px;cursor:pointer;">Add</button>
+                        <button onclick="openProductDetail(${item.id})" style="background:#111;color:#fff;border:none;padding:5px 8px;font-size:11px;cursor:pointer;">Select</button>
                     </div>
                 `;
             });
         }
 
         function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            cart.push(product);
-            updateCartUI();
-            openCart();
+            openProductDetail(id);
         }
 
         function updateCartUI() {
@@ -579,10 +810,11 @@
                 total += item.price;
                 container.innerHTML += `
                     <div class="drawer-item">
-                        <img src="${item.image}" alt="${item.name}">
+                        <img src="${item.images[0]}" alt="${item.name}">
                         <div>
-                            <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name}</h4>
-                            <p style="font-size: 13px; font-weight: bold;">Tk ${item.price.toLocaleString()}.00</p>
+                            <h4 style="font-size: 13px; margin-bottom: 2px;">${item.name}</h4>
+                            <p style="font-size: 11px; color: #666; margin-bottom: 2px;">Size: ${item.selectedSize} | Color: <span style="display:inline-block;width:10px;height:10px;background:${item.selectedColor};border-radius:50%;vertical-align:middle;"></span></p>
+                            <p style="font-size: 12px; font-weight: bold;">Tk ${item.price.toLocaleString()}.00</p>
                         </div>
                     </div>
                 `;
@@ -617,7 +849,6 @@
             drawerOverlay.classList.remove('active');
         }
 
-        document.getElementById('cart-btn').addEventListener('click', openWishlist); // Let cart click open cart
         document.getElementById('cart-btn').onclick = openCart;
         document.getElementById('close-cart').addEventListener('click', closeCart);
         
@@ -628,6 +859,7 @@
             closeCart();
             closeWishlist();
             checkoutModal.classList.remove('active');
+            document.getElementById('product-detail-modal').classList.remove('active');
         });
 
         document.getElementById('open-checkout-btn').addEventListener('click', () => {
