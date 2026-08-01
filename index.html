@@ -163,7 +163,7 @@
         .success-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
         .success-icon { font-size: 45px; color: #43a047; margin-bottom: 15px; }
 
-        /* Footer */
+        /* Footer Style */
         .footer { background-color: #111; color: #aaa; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 50px; }
         .footer p { margin-bottom: 8px; }
     </style>
@@ -397,17 +397,26 @@
         <div class="quick-view-content" id="quick-view-body"></div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
-        <p>Hotline: +8801700000000 | Email: support@bazeline.com</p>
-        <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
-    </footer>
+    <!-- Footer Container (Dynamic Load via JS) -->
+    <footer id="site-footer"></footer>
 
     <script src="products.js"></script>
     <script>
         let cart = JSON.parse(localStorage.getItem('bazeline_cart')) || [];
         let wishlist = [];
+
+        // ফুটার ডায়নামিকালি লোড করার ফাংশন
+        function loadFooter() {
+            const footerContainer = document.getElementById('site-footer');
+            if (!footerContainer) return;
+
+            footerContainer.className = "footer";
+            footerContainer.innerHTML = `
+                <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
+                <p>Hotline: +8801700000000 | Email: support@bazeline.com</p>
+                <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
+            `;
+        }
 
         function renderProducts(list) {
             const grid = document.getElementById('product-grid');
@@ -952,7 +961,11 @@
             changeSlide(1);
         }, 4000);
 
-        window.onload = loadProducts;
+        // পেজ লোড হওয়ার সময় ফুটার এবং প্রোডাক্টস লোড করার ফাংশন কল করা হলো
+        window.onload = function() {
+            loadFooter();
+            loadProducts();
+        };
     </script>
 </body>
 </html>
