@@ -83,5 +83,53 @@ const products = [
         image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
         hoverImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600",
         description: "Soft cotton minimalist black t-shirt offering maximum comfort and durability."
+    },
+    {
+        id: 7,
+        name: "Executive Formal Navy Blue Suit Pant",
+        category: "Pants",
+        price: 2650,
+        oldPrice: 3200,
+        discount: "17% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
+        description: "Premium navy blue trousers crafted for a sharp, executive corporate look."
+    },
+    {
+        id: 8,
+        name: "Traditional Designer Festive Panjabi",
+        category: "Kurtas",
+        price: 2850,
+        oldPrice: 3500,
+        discount: "19% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600",
+        description: "Exquisite festive designer panjabi for men, combining traditional aesthetics with modern comfort."
+    },
+    {
+        id: 9,
+        name: "Classic Urban Polo Shirt - Grey",
+        category: "T-Shirts",
+        price: 1250,
+        oldPrice: 1600,
+        discount: "22% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
+        description: "Stylish urban polo shirt designed for casual smart-casual everyday wear."
+    },
+    {
+        id: 10,
+        name: "Checkered Flannel Casual Shirt",
+        category: "Shirts",
+        price: 1950,
+        oldPrice: 2400,
+        discount: "18% OFF",
+        stock: "In Stock",
+        image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600",
+        hoverImage: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
+        description: "Warm and cozy checkered flannel shirt, ideal for winter and stylish street style."
     }
 ];
