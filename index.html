@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bazeline - Premium Menswear</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff; color: #333; line-height: 1.6; }
@@ -99,7 +101,7 @@
         .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 10px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* Quick View / Single Product Modal (Point 5 Update) */
+        /* Quick View / Single Product Modal */
         .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; padding: 15px; }
         .quick-view-modal.active { display: flex; }
         .quick-view-content { background: #fff; width: 100%; max-width: 850px; max-height: 90vh; display: grid; grid-template-columns: 1fr 1fr; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
@@ -115,14 +117,12 @@
         .qv-details { padding: 25px; display: flex; flex-direction: column; overflow-y: auto; max-height: 85vh; }
         .close-qv { position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; z-index: 10; color: #111; }
 
-        /* Size & Color Selection UI */
+        /* Size Selection UI */
         .qv-option-group { margin: 12px 0; }
         .qv-option-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; color: #555; }
         .qv-options-row { display: flex; gap: 8px; flex-wrap: wrap; }
         .qv-size-btn { border: 1px solid #ccc; background: #fff; padding: 6px 12px; font-size: 12px; border-radius: 4px; cursor: pointer; transition: 0.2s; }
         .qv-size-btn.active { background: #111; color: #fff; border-color: #111; }
-        .qv-color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid #ddd; transition: 0.2s; }
-        .qv-color-dot.active { border-color: #111; transform: scale(1.1); }
 
         /* Quantity Counter UI (+ / -) */
         .qv-qty-cart-row { display: flex; gap: 10px; margin-top: 15px; align-items: center; }
@@ -134,19 +134,19 @@
         .qv-reviews { margin-top: 15px; padding-top: 12px; border-top: 1px solid #eee; font-size: 12px; color: #666; }
         .stars { color: #f39c12; font-size: 13px; }
 
-        /* Drawers */
+        /* Modern Slide-out Cart Drawer (Step 6) */
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
         .drawer-overlay.active { visibility: visible; opacity: 1; }
         
-        .drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
+        .drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 2001; display: flex; flex-direction: column; }
         .drawer.active { right: 0; }
         .drawer-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
-        .drawer-item { display: flex; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px; align-items: center; }
-        .drawer-item img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; }
+        .drawer-item { display: flex; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px; align-items: center; position: relative; }
+        .drawer-item img { width: 65px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
         .drawer-footer { padding: 20px; border-top: 1px solid #eee; background: #f9f9f9; }
         .drawer-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .drawer-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; }
+        .drawer-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 4px; }
 
         /* Checkout Modal */
         .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
@@ -155,7 +155,7 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; margin-bottom: 5px; font-weight: 500; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; border-radius: 4px; }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; }
 
         /* Footer */
@@ -168,12 +168,12 @@
     <!-- Header & Navigation -->
     <header class="header">
         <div class="nav-left">
-            <button class="nav-icon-btn">☰ Menu</button>
+            <button class="nav-icon-btn"><i class="fa-solid fa-bars"></i> Menu</button>
         </div>
         <div class="logo">Bazeline</div>
         <div class="nav-right">
-            <button class="nav-icon-btn" id="wishlist-btn">❤️ Wishlist <span class="wishlist-badge" id="wishlist-count">0</span></button>
-            <button class="nav-icon-btn" id="cart-btn">🛒 Bag <span class="cart-badge" id="cart-count">0</span></button>
+            <button class="nav-icon-btn" id="wishlist-btn"><i class="fa-solid fa-heart"></i> Wishlist <span class="wishlist-badge" id="wishlist-count">0</span></button>
+            <button class="nav-icon-btn" id="cart-btn"><i class="fa-solid fa-bag-shopping"></i> Bag <span class="cart-badge" id="cart-count">0</span></button>
         </div>
     </header>
 
@@ -291,10 +291,10 @@
     <!-- Overlay & Drawers -->
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
-    <!-- Cart Drawer -->
+    <!-- Cart Drawer (Step 6 Enhanced) -->
     <div class="drawer" id="cart-drawer">
         <div class="drawer-header">
-            <h3>Your Bag</h3>
+            <h3><i class="fa-solid fa-bag-shopping text-indigo-600"></i> Your Bag</h3>
             <button id="close-cart" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
         </div>
         <div class="drawer-body" id="cart-items-container">
@@ -353,7 +353,7 @@
         </form>
     </div>
 
-    <!-- Quick View / Single Product Details Modal (Point 5 Update with Interactive Review Form) -->
+    <!-- Quick View / Single Product Details Modal -->
     <div class="quick-view-modal" id="quick-view-modal">
         <div class="quick-view-content" id="quick-view-body"></div>
     </div>
@@ -367,7 +367,7 @@
 
     <script src="products.js"></script>
     <script>
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('bazeline_cart')) || [];
         let wishlist = [];
 
         function renderProducts(list) {
@@ -393,8 +393,8 @@
                             <img src="${mainImg}" alt="${product.name}" class="prod-img main-img">
                             <img src="${hoverImg}" alt="${product.name}" class="prod-img hover-img">
                             <div class="card-actions">
-                                <button class="action-icon-btn" style="color: ${isWishlisted ? 'red' : '#111'}" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)" title="Wishlist">❤️</button>
-                                <button class="action-icon-btn" onclick="event.stopPropagation(); openQuickView(${product.id})" title="Quick View">👁️</button>
+                                <button class="action-icon-btn" style="color: ${isWishlisted ? 'red' : '#111'}" onclick="event.stopPropagation(); toggleWishlist(${product.id}, this)" title="Wishlist"><i class="fa-solid fa-heart"></i></button>
+                                <button class="action-icon-btn" onclick="event.stopPropagation(); openQuickView(${product.id})" title="Quick View"><i class="fa-solid fa-eye"></i></button>
                             </div>
                         </div>
                         <div class="prod-details">
@@ -417,6 +417,7 @@
             if (typeof products !== 'undefined') {
                 renderProducts(products);
             }
+            updateCartUI(); // লোড হওয়ার সাথে সাথে কার্ট আপডেট রাখা
         }
 
         // Combined Filter & Sorting Logic
@@ -535,7 +536,7 @@
             }
         });
 
-        // 5. Product Details Modal / Quick View (Updated with Dynamic Customer Review Submission Form)
+        // Product Details Modal / Quick View with Interactive Review Form
         function openQuickView(id) {
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
@@ -663,23 +664,6 @@
             alert("Thank you! Your review has been added successfully.");
         }
 
-        function addDetailedToCart(id) {
-            if (typeof products === 'undefined') return;
-            const product = products.find(p => p.id === id);
-            const qty = parseInt(document.getElementById('qv-qty-input').value) || 1;
-            const activeSizeBtn = document.querySelector('.qv-size-btn.active');
-            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
-
-            if (product) {
-                for(let i=0; i<qty; i++) {
-                    cart.push({...product, selectedSize});
-                }
-                updateCartUI();
-                closeQuickView();
-                openCart();
-            }
-        }
-
         function closeQuickView() {
             document.getElementById('quick-view-modal').classList.remove('active');
         }
@@ -722,36 +706,87 @@
             });
         }
 
-        function addToCart(id) {
+        // --- Enhanced Shopping Cart Management System (Step 6) ---
+        function addToCart(id, qty = 1) {
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
+            const activeSizeBtn = document.querySelector('.qv-size-btn.active');
+            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+
             if (product) {
-                cart.push({...product, selectedSize: 'M'});
-                updateCartUI();
+                const existingIndex = cart.findIndex(item => item.id === id && item.selectedSize === selectedSize);
+                if (existingIndex > -1) {
+                    cart[existingIndex].quantity += qty;
+                } else {
+                    cart.push({
+                        ...product,
+                        selectedSize: selectedSize,
+                        quantity: qty,
+                        price: product.price || 0
+                    });
+                }
+                saveAndRenderCart();
+                closeQuickView();
                 openCart();
             }
         }
 
+        function addDetailedToCart(id) {
+            const qty = parseInt(document.getElementById('qv-qty-input').value) || 1;
+            addToCart(id, qty);
+        }
+
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveAndRenderCart();
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            saveAndRenderCart();
+        }
+
+        function saveAndRenderCart() {
+            localStorage.setItem('bazeline_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
         function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').innerText = totalCount;
+            
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
                 container.innerHTML = `<p style="text-align: center; color: #777; margin-top: 20px;">Your bag is empty</p>`;
                 document.getElementById('cart-total-price').innerText = "Tk 0.00";
                 return;
             }
+            
             container.innerHTML = "";
             let total = 0;
-            cart.forEach((item) => {
-                total += (item.price || 0);
+            
+            cart.forEach((item, index) => {
+                const itemTotal = (item.price || 0) * item.quantity;
+                total += itemTotal;
                 container.innerHTML += `
                     <div class="drawer-item">
                         <img src="${item.image || ''}" alt="${item.name || ''}">
-                        <div>
-                            <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name || ''}</h4>
+                        <div style="flex:1;">
+                            <h4 style="font-size: 13px; margin-bottom: 2px;">${item.name || ''}</h4>
                             <p style="font-size: 11px; color: #666;">Size: ${item.selectedSize || 'M'}</p>
-                            <p style="font-size: 13px; font-weight: bold;">Tk ${(item.price || 0).toLocaleString()}.00</p>
+                            <p style="font-size: 13px; font-weight: bold; color: #111; margin-top: 2px;">Tk ${(item.price || 0).toLocaleString()}.00</p>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                                <div style="display: flex; border: 1px solid #ccc; border-radius: 3px; overflow: hidden;">
+                                    <button onclick="updateQuantity(${index}, -1)" style="padding: 2px 8px; background: #f4f4f4; border: none; cursor: pointer;">-</button>
+                                    <span style="padding: 2px 8px; font-size: 12px; font-weight: bold;">${item.quantity}</span>
+                                    <button onclick="updateQuantity(${index}, 1)" style="padding: 2px 8px; background: #f4f4f4; border: none; cursor: pointer;">+</button>
+                                </div>
+                            </div>
                         </div>
+                        <button onclick="removeCartItem(${index})" style="background: none; border: none; color: #999; cursor: pointer; position: absolute; top: 10px; right: 10px;"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 `;
             });
@@ -835,7 +870,7 @@
             e.preventDefault();
             alert("Order placed successfully! Thank you for shopping with Bazeline.");
             cart = [];
-            updateCartUI();
+            saveAndRenderCart();
             checkoutModal.classList.remove('active');
             drawerOverlay.classList.remove('active');
             const orderForm = document.getElementById('order-form');
