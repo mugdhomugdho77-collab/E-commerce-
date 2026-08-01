@@ -134,7 +134,7 @@
         .qv-reviews { margin-top: 15px; padding-top: 12px; border-top: 1px solid #eee; font-size: 12px; color: #666; }
         .stars { color: #f39c12; font-size: 13px; }
 
-        /* Modern Slide-out Cart Drawer (Step 6) */
+        /* Modern Slide-out Cart Drawer */
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
         .drawer-overlay.active { visibility: visible; opacity: 1; }
         
@@ -145,18 +145,23 @@
         .drawer-item { display: flex; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px; align-items: center; position: relative; }
         .drawer-item img { width: 65px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
         .drawer-footer { padding: 20px; border-top: 1px solid #eee; background: #f9f9f9; }
-        .drawer-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .drawer-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: bold; margin-bottom: 8px; }
         .drawer-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 4px; }
 
         /* Checkout Modal */
-        .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
+        .checkout-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: #fff; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 3000; border-radius: 8px; visibility: hidden; opacity: 0; transition: 0.3s ease; }
         .checkout-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .checkout-modal h2 { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; margin-bottom: 5px; font-weight: 500; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .checkout-modal h2 { font-size: 20px; margin-bottom: 15px; font-weight: 600; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; margin-bottom: 4px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 9px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
         .submit-order-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 12px; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 10px; border-radius: 4px; }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; }
+
+        /* Success Order Confirmation Modal Popup */
+        .success-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 400px; background: #fff; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); z-index: 5000; border-radius: 10px; text-align: center; visibility: hidden; opacity: 0; transition: 0.3s ease; }
+        .success-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .success-icon { font-size: 45px; color: #43a047; margin-bottom: 15px; }
 
         /* Footer */
         .footer { background-color: #111; color: #aaa; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 50px; }
@@ -291,10 +296,10 @@
     <!-- Overlay & Drawers -->
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
-    <!-- Cart Drawer (Step 6 Enhanced) -->
+    <!-- Cart Drawer -->
     <div class="drawer" id="cart-drawer">
         <div class="drawer-header">
-            <h3><i class="fa-solid fa-bag-shopping text-indigo-600"></i> Your Bag</h3>
+            <h3><i class="fa-solid fa-bag-shopping"></i> Your Bag</h3>
             <button id="close-cart" style="background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
         </div>
         <div class="drawer-body" id="cart-items-container">
@@ -303,9 +308,17 @@
         <div class="drawer-footer">
             <div class="drawer-total">
                 <span>Subtotal:</span>
+                <span id="cart-subtotal-price">Tk 0.00</span>
+            </div>
+            <div class="drawer-total" style="font-size: 13px; color: #666; font-weight: normal;">
+                <span>Delivery Charge:</span>
+                <span id="cart-delivery-charge">Tk 80.00</span>
+            </div>
+            <div class="drawer-total" style="border-top: 1px solid #ddd; padding-top: 6px; margin-top: 6px; font-size: 16px;">
+                <span>Total:</span>
                 <span id="cart-total-price">Tk 0.00</span>
             </div>
-            <button class="drawer-btn" id="open-checkout-btn">Proceed to Checkout</button>
+            <button class="drawer-btn" id="open-checkout-btn" style="margin-top: 10px;">Proceed to Checkout</button>
         </div>
     </div>
 
@@ -320,7 +333,7 @@
         </div>
     </div>
 
-    <!-- Checkout Modal -->
+    <!-- Checkout Modal with District, Thana & Delivery Area Selection -->
     <div class="checkout-modal" id="checkout-modal">
         <button class="close-modal" id="close-checkout-btn">&times;</button>
         <h2>Checkout Details</h2>
@@ -334,8 +347,23 @@
                 <input type="tel" id="cust-phone" required placeholder="Enter your phone number">
             </div>
             <div class="form-group">
-                <label>Delivery Address</label>
-                <input type="text" id="cust-address" required placeholder="House, Road, Area, City">
+                <label>Delivery Area</label>
+                <select id="delivery-area" onchange="updateDeliveryChargeUI()">
+                    <option value="inside">Inside Dhaka (Tk 80)</option>
+                    <option value="outside">Outside Dhaka (Tk 150)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>District</label>
+                <input type="text" id="cust-district" required placeholder="e.g. Dhaka, Khulna, Chittagong">
+            </div>
+            <div class="form-group">
+                <label>Thana / Area</label>
+                <input type="text" id="cust-thana" required placeholder="e.g. Daulatpur, Dhanmondi">
+            </div>
+            <div class="form-group">
+                <label>Detailed Address (House, Road)</label>
+                <input type="text" id="cust-address" required placeholder="House/Road details">
             </div>
             <div class="form-group">
                 <label>Payment Method</label>
@@ -346,11 +374,22 @@
             </div>
             <div class="form-group" id="trx-group" style="display: none;">
                 <label>Transaction ID (TrxID)</label>
-                <input type="text" id="cust-cust-trx" placeholder="Enter your bKash/Nagad TrxID">
+                <input type="text" id="cust-trx" placeholder="Enter bKash/Nagad TrxID">
                 <small style="color: #666; font-size: 11px;">Send money to 01700000000 and enter TrxID</small>
             </div>
             <button type="submit" class="submit-order-btn">Confirm Order</button>
         </form>
+    </div>
+
+    <!-- Success Order ID Generator Popup -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h3 style="font-size: 20px; margin-bottom: 8px; color: #111;">Order Placed Successfully!</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Thank you for shopping with Bazeline. Your order has been placed.</p>
+        <div style="background: #f9f9f9; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #eee;">
+            <p style="font-size: 13px; font-weight: bold; color: #333;" id="generated-order-id">Order ID: #BZ-982143</p>
+        </div>
+        <button onclick="closeSuccessModal()" style="width: 100%; background: #111; color: #fff; border: none; padding: 10px; font-size: 13px; cursor: pointer; border-radius: 4px; text-transform: uppercase;">Continue Shopping</button>
     </div>
 
     <!-- Quick View / Single Product Details Modal -->
@@ -420,7 +459,6 @@
             updateCartUI(); 
         }
 
-        // Combined Filter & Sorting Logic
         function applyFilterAndSort() {
             if (typeof products === 'undefined') return;
             const selectedCategory = document.getElementById('categoryFilter').value;
@@ -435,7 +473,6 @@
 
             let filtered = products.filter(product => {
                 let matchesCategory = (selectedCategory === 'All' || product.category === selectedCategory);
-                
                 let matchesPrice = true;
                 if (selectedPrice === 'low') {
                     matchesPrice = product.price < 1500;
@@ -444,7 +481,6 @@
                 } else if (selectedPrice === 'high') {
                     matchesPrice = product.price > 2000;
                 }
-
                 return matchesCategory && matchesPrice;
             });
 
@@ -475,7 +511,6 @@
             applyFilterAndSort();
         }
 
-        // Live Search with Dropdown Suggestions
         function handleSearchInput() {
             if (typeof products === 'undefined') return;
             const query = document.getElementById('search-input').value.toLowerCase().trim();
@@ -536,7 +571,6 @@
             }
         });
 
-        // Product Details Modal / Quick View with Interactive Review Form
         function openQuickView(id) {
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
@@ -563,7 +597,6 @@
                     
                     <p style="font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.5;">${product.description || ''}</p>
                     
-                    <!-- Size Selection -->
                     <div class="qv-option-group">
                         <div class="qv-option-title">Select Size:</div>
                         <div class="qv-options-row">
@@ -574,7 +607,6 @@
                         </div>
                     </div>
 
-                    <!-- Quantity Counter (+ / -) -->
                     <div class="qv-qty-cart-row">
                         <div class="qty-counter">
                             <button class="qty-btn" onclick="adjustQvQty(-1)">-</button>
@@ -584,14 +616,12 @@
                         <button class="add-to-cart-btn" style="flex:1;" onclick="addDetailedToCart(${product.id})">Add to Bag</button>
                     </div>
 
-                    <!-- Customer Reviews & Submission Form Section -->
                     <div class="qv-reviews">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: bold; color: #333; font-size: 13px;">Customer Reviews</span>
                             <span class="stars">★★★★★ <span style="color:#666; font-size:11px;">(4.8 / 5.0)</span></span>
                         </div>
 
-                        <!-- Existing Reviews List Container -->
                         <div id="reviewsList" style="max-height: 140px; overflow-y: auto; margin-bottom: 12px; padding-right: 5px;">
                             <div style="border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 6px;">
                                 <strong style="color: #222; font-size: 12px;">Rahim Ahmed</strong> <span style="color: #f39c12; font-size: 11px; margin-left: 5px;">★★★★★</span>
@@ -599,7 +629,6 @@
                             </div>
                         </div>
 
-                        <!-- Dynamic Review Form -->
                         <form id="reviewForm" onsubmit="submitCustomerReview(event)" style="background: #fdfdfd; padding: 10px; border: 1px solid #eee; border-radius: 4px;">
                             <div style="font-size: 11px; font-weight: 600; margin-bottom: 6px; color: #333; text-transform: uppercase;">Leave a Review</div>
                             <div style="display: flex; gap: 6px; margin-bottom: 6px;">
@@ -642,14 +671,12 @@
             input.value = current;
         }
 
-        // Function to handle Customer Review Form Submission
         function submitCustomerReview(e) {
             e.preventDefault();
             const name = document.getElementById('reviewerName').value;
             const rating = parseInt(document.getElementById('reviewRating').value);
             const comment = document.getElementById('reviewComment').value;
             const reviewsList = document.getElementById('reviewsList');
-
             const starsStr = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
             const newReviewHTML = `
@@ -658,7 +685,6 @@
                     <p style="font-size: 11px; color: #555; margin-top: 2px;">${comment}</p>
                 </div>
             `;
-
             reviewsList.insertAdjacentHTML('afterbegin', newReviewHTML);
             document.getElementById('reviewForm').reset();
             alert("Thank you! Your review has been added successfully.");
@@ -706,7 +732,6 @@
             });
         }
 
-        // --- Enhanced Shopping Cart Management System (Step 6) ---
         function addToCart(id, qty = 1) {
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
@@ -754,6 +779,19 @@
             updateCartUI();
         }
 
+        function getDeliveryFee() {
+            const areaSelect = document.getElementById('delivery-area');
+            if (!areaSelect) return 80;
+            return areaSelect.value === 'outside' ? 150 : 80;
+        }
+
+        function updateDeliveryChargeUI() {
+            const fee = getDeliveryFee();
+            const deliveryChargeEl = document.getElementById('cart-delivery-charge');
+            if(deliveryChargeEl) deliveryChargeEl.innerText = `Tk ${fee}.00`;
+            updateCartUI();
+        }
+
         function updateCartUI() {
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').innerText = totalCount;
@@ -761,16 +799,17 @@
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
                 container.innerHTML = `<p style="text-align: center; color: #777; margin-top: 20px;">Your bag is empty</p>`;
+                document.getElementById('cart-subtotal-price').innerText = "Tk 0.00";
                 document.getElementById('cart-total-price').innerText = "Tk 0.00";
                 return;
             }
             
             container.innerHTML = "";
-            let total = 0;
+            let subtotal = 0;
             
             cart.forEach((item, index) => {
                 const itemTotal = (item.price || 0) * item.quantity;
-                total += itemTotal;
+                subtotal += itemTotal;
                 container.innerHTML += `
                     <div class="drawer-item">
                         <img src="${item.image || ''}" alt="${item.name || ''}">
@@ -790,18 +829,26 @@
                     </div>
                 `;
             });
-            document.getElementById('cart-total-price').innerText = `Tk ${total.toLocaleString()}.00`;
+            
+            const deliveryFee = getDeliveryFee();
+            const grandTotal = subtotal + deliveryFee;
+
+            document.getElementById('cart-subtotal-price').innerText = `Tk ${subtotal.toLocaleString()}.00`;
+            document.getElementById('cart-delivery-charge').innerText = `Tk ${deliveryFee}.00`;
+            document.getElementById('cart-total-price').innerText = `Tk ${grandTotal.toLocaleString()}.00`;
         }
 
         const cartDrawer = document.getElementById('cart-drawer');
         const wishlistDrawer = document.getElementById('wishlist-drawer');
         const drawerOverlay = document.getElementById('drawer-overlay');
         const checkoutModal = document.getElementById('checkout-modal');
+        const successModal = document.getElementById('success-modal');
 
         function openCart() {
             wishlistDrawer.classList.remove('active');
             cartDrawer.classList.add('active');
             drawerOverlay.classList.add('active');
+            updateCartUI();
         }
 
         function closeCart() {
@@ -835,6 +882,7 @@
                 closeCart();
                 closeWishlist();
                 checkoutModal.classList.remove('active');
+                successModal.classList.remove('active');
             });
         }
 
@@ -847,6 +895,7 @@
                 }
                 closeCart();
                 checkoutModal.classList.add('active');
+                drawerOverlay.classList.add('active');
             });
         }
 
@@ -868,15 +917,25 @@
 
         function submitOrder(e) {
             e.preventDefault();
-            alert("Order placed successfully! Thank you for shopping with Bazeline.");
+            
+            // Unique Order ID Generator
+            const randomId = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('generated-order-id').innerText = `Order ID: #BZ-${randomId}`;
+
             cart = [];
             saveAndRenderCart();
             checkoutModal.classList.remove('active');
-            drawerOverlay.classList.remove('active');
+            successModal.classList.add('active');
+            
             const orderForm = document.getElementById('order-form');
             if(orderForm) orderForm.reset();
             const trxGroup = document.getElementById('trx-group');
             if(trxGroup) trxGroup.style.display = 'none';
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.remove('active');
+            drawerOverlay.classList.remove('active');
         }
 
         let currentSlide = 0;
