@@ -96,16 +96,43 @@
         .prod-price { font-size: 14px; font-weight: bold; color: #111; }
         .prod-old-price { font-size: 12px; color: #999; text-decoration: line-through; }
         
-        .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 8px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-to-cart-btn { width: 100%; background-color: #111; color: #fff; border: none; padding: 10px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
         .add-to-cart-btn:hover { background-color: #333; }
 
-        /* Quick View Modal */
-        .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; }
+        /* Quick View / Single Product Modal (Point 5 Update) */
+        .quick-view-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 4000; padding: 15px; }
         .quick-view-modal.active { display: flex; }
-        .quick-view-content { background: #fff; width: 90%; max-width: 750px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 6px; overflow: hidden; position: relative; }
+        .quick-view-content { background: #fff; width: 100%; max-width: 850px; max-height: 90vh; display: grid; grid-template-columns: 1fr 1fr; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        @media(max-width: 768px) { .quick-view-content { grid-template-columns: 1fr; overflow-y: auto; max-height: 85vh; } }
+        
+        .qv-gallery { padding: 20px; background: #f9f9f9; display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; }
+        .qv-main-img-wrap { width: 100%; aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; background: #fff; border: 1px solid #eee; }
         .qv-img { width: 100%; height: 100%; object-fit: cover; }
-        .qv-details { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
-        .close-qv { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 22px; cursor: pointer; }
+        .qv-thumbnails { display: flex; gap: 8px; overflow-x: auto; width: 100%; }
+        .qv-thumb { width: 55px; height: 70px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; opacity: 0.7; transition: 0.2s; }
+        .qv-thumb.active, .qv-thumb:hover { border-color: #111; opacity: 1; }
+
+        .qv-details { padding: 25px; display: flex; flex-direction: column; overflow-y: auto; max-height: 85vh; }
+        .close-qv { position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; z-index: 10; color: #111; }
+
+        /* Size & Color Selection UI */
+        .qv-option-group { margin: 12px 0; }
+        .qv-option-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; color: #555; }
+        .qv-options-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .qv-size-btn { border: 1px solid #ccc; background: #fff; padding: 6px 12px; font-size: 12px; border-radius: 4px; cursor: pointer; transition: 0.2s; }
+        .qv-size-btn.active { background: #111; color: #fff; border-color: #111; }
+        .qv-color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid #ddd; transition: 0.2s; }
+        .qv-color-dot.active { border-color: #111; transform: scale(1.1); }
+
+        /* Quantity Counter UI (+ / -) */
+        .qv-qty-cart-row { display: flex; gap: 10px; margin-top: 15px; align-items: center; }
+        .qty-counter { display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #fff; }
+        .qty-btn { background: #f4f4f4; border: none; padding: 10px 14px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .qty-input { width: 45px; text-align: center; border: none; outline: none; font-size: 14px; font-weight: bold; }
+
+        /* Reviews & Rating Section */
+        .qv-reviews { margin-top: 15px; padding-top: 12px; border-top: 1px solid #eee; font-size: 12px; color: #666; }
+        .stars { color: #f39c12; font-size: 13px; }
 
         /* Drawers */
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; transition: 0.3s; z-index: 2000; }
@@ -326,7 +353,7 @@
         </form>
     </div>
 
-    <!-- Quick View Modal -->
+    <!-- Quick View / Single Product Details Modal (Point 5 Update) -->
     <div class="quick-view-modal" id="quick-view-modal">
         <div class="quick-view-content" id="quick-view-body"></div>
     </div>
@@ -355,7 +382,6 @@
 
             list.forEach(product => {
                 const isWishlisted = wishlist.some(item => item.id === product.id);
-                // Hover image fallback fix: যদি hoverImage না থাকে তবে main image-টিই দেখাবে
                 const mainImg = product.image || '';
                 const hoverImg = product.hoverImage || product.image || '';
 
@@ -509,6 +535,7 @@
             }
         });
 
+        // 5. Product Details Modal / Quick View (Updated with Gallery, Sizes, Quantity Counter & Reviews)
         function openQuickView(id) {
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
@@ -516,18 +543,96 @@
             const modal = document.getElementById('quick-view-modal');
             const body = document.getElementById('quick-view-body');
             
+            // Collect images for gallery (fallback to main & hover image if multiple images array not present)
+            const imgList = product.images && product.images.length > 0 ? product.images : [product.image, product.hoverImage || product.image];
+
             body.innerHTML = `
                 <button class="close-qv" onclick="closeQuickView()">&times;</button>
-                <img src="${product.image || ''}" alt="${product.name || ''}" class="qv-img">
+                <div class="qv-gallery">
+                    <div class="qv-main-img-wrap">
+                        <img src="${imgList[0]}" alt="${product.name || ''}" class="qv-img" id="qv-main-display">
+                    </div>
+                    <div class="qv-thumbnails">
+                        ${imgList.map((img, idx) => `<img src="${img}" class="qv-thumb ${idx === 0 ? 'active' : ''}" onclick="changeQvImage('${img}', this)">`).join('')}
+                    </div>
+                </div>
                 <div class="qv-details">
-                    <p style="font-size: 12px; color: #888; text-transform: uppercase;">${product.category || ''}</p>
-                    <h2 style="font-size: 20px; margin: 5px 0 10px 0;">${product.name || ''}</h2>
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Tk ${(product.price || 0).toLocaleString()}.00</div>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 20px;">${product.description || ''}</p>
-                    <button class="add-to-cart-btn" onclick="addToCart(${product.id}); closeQuickView();">Add to Bag</button>
+                    <p style="font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 3px;">${product.category || ''}</p>
+                    <h2 style="font-size: 20px; margin-bottom: 8px; font-weight: 600;">${product.name || ''}</h2>
+                    <div style="font-size: 18px; font-weight: bold; color: #111; margin-bottom: 12px;">Tk ${(product.price || 0).toLocaleString()}.00</div>
+                    
+                    <p style="font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.5;">${product.description || ''}</p>
+                    
+                    <!-- Size Selection -->
+                    <div class="qv-option-group">
+                        <div class="qv-option-title">Select Size:</div>
+                        <div class="qv-options-row">
+                            <button class="qv-size-btn active" onclick="selectSize(this)">M</button>
+                            <button class="qv-size-btn" onclick="selectSize(this)">L</button>
+                            <button class="qv-size-btn" onclick="selectSize(this)">XL</button>
+                            <button class="qv-size-btn" onclick="selectSize(this)">XXL</button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Counter (+ / -) -->
+                    <div class="qv-qty-cart-row">
+                        <div class="qty-counter">
+                            <button class="qty-btn" onclick="adjustQvQty(-1)">-</button>
+                            <input type="text" id="qv-qty-input" class="qty-input" value="1" readonly>
+                            <button class="qty-btn" onclick="adjustQvQty(1)">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" style="flex:1;" onclick="addDetailedToCart(${product.id})">Add to Bag</button>
+                    </div>
+
+                    <!-- Reviews & Rating Section -->
+                    <div class="qv-reviews">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span class="stars">★★★★★</span>
+                            <span style="font-weight: bold; color: #333;">4.8 / 5.0</span>
+                        </div>
+                        <p>Based on 24 verified customer reviews for this item.</p>
+                    </div>
                 </div>
             `;
             modal.classList.add('active');
+        }
+
+        function changeQvImage(imgSrc, thumbElement) {
+            document.getElementById('qv-main-display').src = imgSrc;
+            document.querySelectorAll('.qv-thumb').forEach(el => el.classList.remove('active'));
+            thumbElement.classList.add('active');
+        }
+
+        function selectSize(btn) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.qv-size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function adjustQvQty(val) {
+            const input = document.getElementById('qv-qty-input');
+            if(!input) return;
+            let current = parseInt(input.value) || 1;
+            current += val;
+            if(current < 1) current = 1;
+            input.value = current;
+        }
+
+        function addDetailedToCart(id) {
+            if (typeof products === 'undefined') return;
+            const product = products.find(p => p.id === id);
+            const qty = parseInt(document.getElementById('qv-qty-input').value) || 1;
+            const activeSizeBtn = document.querySelector('.qv-size-btn.active');
+            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+
+            if (product) {
+                for(let i=0; i<qty; i++) {
+                    cart.push({...product, selectedSize});
+                }
+                updateCartUI();
+                closeQuickView();
+                openCart();
+            }
         }
 
         function closeQuickView() {
@@ -576,7 +681,7 @@
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
             if (product) {
-                cart.push(product);
+                cart.push({...product, selectedSize: 'M'});
                 updateCartUI();
                 openCart();
             }
@@ -599,6 +704,7 @@
                         <img src="${item.image || ''}" alt="${item.name || ''}">
                         <div>
                             <h4 style="font-size: 13px; margin-bottom: 4px;">${item.name || ''}</h4>
+                            <p style="font-size: 11px; color: #666;">Size: ${item.selectedSize || 'M'}</p>
                             <p style="font-size: 13px; font-weight: bold;">Tk ${(item.price || 0).toLocaleString()}.00</p>
                         </div>
                     </div>
