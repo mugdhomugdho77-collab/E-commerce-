@@ -1,3 +1,16 @@
+const storeConfig = {
+    name: "Bazeline",
+    address: "Daulatpur, Khulna, Bangladesh",
+    phone: "+8801700000000",
+    email: "support@bazeline.com",
+    socials: {
+        facebook: "https://facebook.com",
+        instagram: "https://instagram.com",
+        youtube: "https://youtube.com",
+        tiktok: "https://tiktok.com"
+    }
+};
+
 const products = [
     {
         id: 1,
