@@ -351,6 +351,14 @@
         <div class="product-grid" id="product-grid"></div>
     </section>
 
+    <!-- 6. Recently Viewed Products Section -->
+    <section class="section" id="recently-viewed-section" style="display: none; border-top: 1px solid #eee; margin-top: 20px;">
+        <div class="section-header">
+            <h2 class="section-title">You Recently Viewed</h2>
+        </div>
+        <div class="product-grid" id="recently-viewed-grid"></div>
+    </section>
+
     <!-- Overlay & Drawers -->
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
@@ -516,6 +524,7 @@
         let cart = JSON.parse(localStorage.getItem('bazeline_cart')) || [];
         let wishlist = [];
         let appliedDiscountPercent = 0; // Coupon discount state
+        let recentlyViewed = JSON.parse(localStorage.getItem('bazeline_recent')) || [];
 
         function loadFooter() {
             const footerContainer = document.getElementById('site-footer');
@@ -589,6 +598,7 @@
                 renderProducts(products);
             }
             updateCartUI(); 
+            renderRecentlyViewed();
         }
 
         function applyFilterAndSort() {
@@ -715,6 +725,10 @@
             if (typeof products === 'undefined') return;
             const product = products.find(p => p.id === id);
             if (!product) return;
+
+            // Track Recently Viewed Products
+            addToRecentlyViewed(product);
+
             const modal = document.getElementById('quick-view-modal');
             const body = document.getElementById('quick-view-body');
             
@@ -801,6 +815,57 @@
                 </div>
             `;
             modal.classList.add('active');
+        }
+
+        // Recently Viewed Logic Helper Functions
+        function addToRecentlyViewed(product) {
+            recentlyViewed = recentlyViewed.filter(item => item.id !== product.id);
+            recentlyViewed.unshift(product);
+            if (recentlyViewed.length > 4) {
+                recentlyViewed.pop();
+            }
+            localStorage.setItem('bazeline_recent', JSON.stringify(recentlyViewed));
+            renderRecentlyViewed();
+        }
+
+        function renderRecentlyViewed() {
+            const section = document.getElementById('recently-viewed-section');
+            const grid = document.getElementById('recently-viewed-grid');
+            if (!section || !grid) return;
+
+            if (recentlyViewed.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            grid.innerHTML = "";
+
+            recentlyViewed.forEach(product => {
+                const mainImg = product.image || '';
+                const hoverImg = product.hoverImage || product.image || '';
+
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <span class="badge-discount">${product.discount || ''}</span>
+                        <div class="prod-img-wrap" onclick="openQuickView(${product.id})">
+                            <img src="${mainImg}" alt="${product.name}" class="prod-img main-img">
+                            <img src="${hoverImg}" alt="${product.name}" class="prod-img hover-img">
+                        </div>
+                        <div class="prod-details">
+                            <div>
+                                <p class="prod-category">${product.category || ''}</p>
+                                <h3 class="prod-title">${product.name || ''}</h3>
+                                <div class="prod-price-box">
+                                    <span class="prod-price">Tk ${(product.price || 0).toLocaleString()}.00</span>
+                                    <span class="prod-old-price">Tk ${(product.oldPrice || 0).toLocaleString()}.00</span>
+                                </div>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
         function orderViaWhatsApp(productId) {
