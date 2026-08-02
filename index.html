@@ -491,7 +491,6 @@
             const footerContainer = document.getElementById('site-footer');
             if (!footerContainer) return;
 
-            // storeConfig থেকে ডাইনামিক ডেটা কল করা হচ্ছে
             const sName = (typeof storeConfig !== 'undefined') ? storeConfig.name : "Bazeline";
             const sPhone = (typeof storeConfig !== 'undefined') ? storeConfig.phone : "+8801700000000";
             const sEmail = (typeof storeConfig !== 'undefined') ? storeConfig.email : "support@bazeline.com";
@@ -503,7 +502,6 @@
                 <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
             `;
 
-            // লোগো বা হেডার নামও ডাইনামিক করার জন্য
             const logoEl = document.getElementById('site-logo');
             if(logoEl) logoEl.innerText = sName;
         }
@@ -731,6 +729,11 @@
                         <button class="add-to-cart-btn" style="flex:1;" onclick="addDetailedToCart(${product.id})">Add to Bag</button>
                     </div>
 
+                    <!-- WhatsApp Order Button Added Here -->
+                    <button onclick="orderViaWhatsApp(${product.id})" style="width: 100%; background-color: #25d366; color: #fff; border: none; padding: 11px; font-size: 13px; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 4px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Order via WhatsApp
+                    </button>
+
                     <div class="qv-reviews">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: bold; color: #333; font-size: 13px;">Customer Reviews</span>
@@ -763,6 +766,32 @@
                 </div>
             `;
             modal.classList.add('active');
+        }
+
+        // WhatsApp Order Function Added Here
+        function orderViaWhatsApp(productId) {
+            if (typeof products === 'undefined' || typeof storeConfig === 'undefined') return;
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const activeSizeBtn = document.querySelector('.qv-size-btn.active');
+            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+            const quantity = parseInt(document.getElementById('qv-qty-input').value) || 1;
+            const totalPrice = product.price * quantity;
+
+            let message = `Hello ${storeConfig.name}, I want to order this product:\n\n`;
+            message += `▪ *Product:* ${product.name}\n`;
+            message += `▪ *Category:* ${product.category}\n`;
+            message += `▪ *Size:* ${selectedSize}\n`;
+            message += `▪ *Quantity:* ${quantity}\n`;
+            message += `▪ *Price:* Tk ${totalPrice.toLocaleString()}.00\n\n`;
+            message += `Please confirm my order.`;
+
+            let whatsappNum = storeConfig.whatsapp.replace(/[^0-9]/g, '');
+            let encodedMessage = encodeURIComponent(message);
+            let whatsappUrl = `https://wa.me/${whatsappNum}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
         }
 
         function openSizeGuide() {
