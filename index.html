@@ -364,9 +364,20 @@
             <p style="text-align: center; color: #777; margin-top: 20px;">Your bag is empty</p>
         </div>
         <div class="drawer-footer">
+            <!-- Coupon Code Section -->
+            <div style="margin-bottom: 12px; display: flex; gap: 6px;">
+                <input type="text" id="coupon-input" placeholder="Coupon Code (e.g. BAZELINE10)" style="flex: 1; padding: 7px 10px; font-size: 12px; border: 1px solid #ccc; border-radius: 4px; outline: none;">
+                <button type="button" onclick="applyCouponCode()" style="background: #111; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: 500;">Apply</button>
+            </div>
+            <div id="coupon-msg" style="font-size: 11px; margin-bottom: 8px; display: none;"></div>
+
             <div class="drawer-total">
                 <span>Subtotal:</span>
                 <span id="cart-subtotal-price">Tk 0.00</span>
+            </div>
+            <div class="drawer-total" id="discount-row" style="font-size: 13px; color: #e53935; display: none;">
+                <span>Discount (10%):</span>
+                <span id="cart-discount-price">- Tk 0.00</span>
             </div>
             <div class="drawer-total" style="font-size: 13px; color: #666; font-weight: normal;">
                 <span>Delivery Charge:</span>
@@ -441,6 +452,7 @@
                 
                 <div style="font-size: 12px; color: #555; background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e5e5e5; margin-bottom: 10px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Items Subtotal:</span> <span>Tk <span id="calc-subtotal">0</span></span></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;" id="calc-discount-row"><span>Discount:</span> <span>- Tk <span id="calc-discount">0</span></span></div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Delivery Charge:</span> <span>Tk <span id="calc-delivery">80</span></span></div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Cash-out Charge (1.85%):</span> <span>Tk <span id="calc-charge">0</span></span></div>
                     <div style="display: flex; justify-content: space-between; border-top: 1px solid #eee; padding-top: 4px; margin-top: 4px; font-weight: bold; color: #111;"><span>Total Payable:</span> <span>Tk <span id="calc-total">0</span></span></div>
@@ -503,6 +515,7 @@
     <script>
         let cart = JSON.parse(localStorage.getItem('bazeline_cart')) || [];
         let wishlist = [];
+        let appliedDiscountPercent = 0; // Coupon discount state
 
         function loadFooter() {
             const footerContainer = document.getElementById('site-footer');
@@ -522,7 +535,6 @@
             const logoEl = document.getElementById('site-logo');
             if(logoEl) logoEl.innerText = sName;
 
-            // Automatically set merchant number from storeConfig
             const merchantInput = document.getElementById('merchant-number');
             if(merchantInput && typeof storeConfig !== 'undefined') {
                 merchantInput.value = storeConfig.bkash || storeConfig.nagad || "+8801964336650";
@@ -799,14 +811,18 @@
             const activeSizeBtn = document.querySelector('.qv-size-btn.active');
             const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
             const quantity = parseInt(document.getElementById('qv-qty-input').value) || 1;
-            const totalPrice = product.price * quantity;
+            let totalPrice = product.price * quantity;
+
+            if (appliedDiscountPercent > 0) {
+                totalPrice -= totalPrice * (appliedDiscountPercent / 100);
+            }
 
             let message = `Hello ${storeConfig.name}, I want to order this product:\n\n`;
             message += `▪ *Product:* ${product.name}\n`;
             message += `▪ *Category:* ${product.category}\n`;
             message += `▪ *Size:* ${selectedSize}\n`;
             message += `▪ *Quantity:* ${quantity}\n`;
-            message += `▪ *Price:* Tk ${totalPrice.toLocaleString()}.00\n\n`;
+            message += `▪ *Price:* Tk ${Math.round(totalPrice).toLocaleString()}.00\n\n`;
             message += `Please confirm my order.`;
 
             let whatsappNum = storeConfig.whatsapp.replace(/[^0-9]/g, '');
@@ -976,6 +992,25 @@
             updatePaymentCalculation();
         }
 
+        // Coupon Code System Logic
+        function applyCouponCode() {
+            const codeInput = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const msgEl = document.getElementById('coupon-msg');
+            
+            if (codeInput === "BAZELINE10") {
+                appliedDiscountPercent = 10;
+                msgEl.style.display = "block";
+                msgEl.style.color = "#43a047";
+                msgEl.innerText = "Coupon 'BAZELINE10' applied successfully! (10% OFF)";
+            } else {
+                appliedDiscountPercent = 0;
+                msgEl.style.display = "block";
+                msgEl.style.color = "#e53935";
+                msgEl.innerText = "Invalid coupon code!";
+            }
+            updateCartUI();
+        }
+
         function updateCartUI() {
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').innerText = totalCount;
@@ -985,6 +1020,8 @@
                 container.innerHTML = `<p style="text-align: center; color: #777; margin-top: 20px;">Your bag is empty</p>`;
                 document.getElementById('cart-subtotal-price').innerText = "Tk 0.00";
                 document.getElementById('cart-total-price').innerText = "Tk 0.00";
+                document.getElementById('discount-row').style.display = "none";
+                appliedDiscountPercent = 0;
                 return;
             }
             
@@ -1014,12 +1051,23 @@
                 `;
             });
             
-            const deliveryFee = getDeliveryFee();
-            const grandTotal = subtotal + deliveryFee;
+            let discountAmount = (subtotal * appliedDiscountPercent) / 100;
+            let discountedSubtotal = subtotal - discountAmount;
+            let deliveryFee = getDeliveryFee();
+            let grandTotal = discountedSubtotal + deliveryFee;
 
             document.getElementById('cart-subtotal-price').innerText = `Tk ${subtotal.toLocaleString()}.00`;
+            
+            const discountRow = document.getElementById('discount-row');
+            if (appliedDiscountPercent > 0) {
+                discountRow.style.display = "flex";
+                document.getElementById('cart-discount-price').innerText = `- Tk ${Math.round(discountAmount).toLocaleString()}.00`;
+            } else {
+                discountRow.style.display = "none";
+            }
+
             document.getElementById('cart-delivery-charge').innerText = `Tk ${deliveryFee}.00`;
-            document.getElementById('cart-total-price').innerText = `Tk ${grandTotal.toLocaleString()}.00`;
+            document.getElementById('cart-total-price').innerText = `Tk ${Math.round(grandTotal).toLocaleString()}.00`;
             
             updatePaymentCalculation();
         }
@@ -1051,20 +1099,26 @@
 
         function updatePaymentCalculation() {
             let subtotal = cart.reduce((sum, item) => sum + ((item.price || 0) * item.quantity), 0);
+            let discountAmount = (subtotal * appliedDiscountPercent) / 100;
+            let discountedSubtotal = subtotal - discountAmount;
             let deliveryFee = getDeliveryFee();
-            let merchandiseTotal = subtotal + deliveryFee;
+            let merchandiseTotal = discountedSubtotal + deliveryFee;
             let cashOutCharge = Math.round(merchandiseTotal * 0.0185);
             let totalPayable = merchandiseTotal + cashOutCharge;
 
             const subEl = document.getElementById("calc-subtotal");
+            const discEl = document.getElementById("calc-discount");
+            const discRowEl = document.getElementById("calc-discount-row");
             const delEl = document.getElementById("calc-delivery");
             const chgEl = document.getElementById("calc-charge");
             const totEl = document.getElementById("calc-total");
 
             if(subEl) subEl.innerText = subtotal.toLocaleString();
+            if(discEl) discEl.innerText = Math.round(discountAmount).toLocaleString();
+            if(discRowEl) discRowEl.style.display = appliedDiscountPercent > 0 ? "flex" : "none";
             if(delEl) delEl.innerText = deliveryFee.toLocaleString();
             if(chgEl) chgEl.innerText = cashOutCharge.toLocaleString();
-            if(totEl) totEl.innerText = totalPayable.toLocaleString();
+            if(totEl) totEl.innerText = Math.round(totalPayable).toLocaleString();
         }
 
         const cartDrawer = document.getElementById('cart-drawer');
@@ -1169,6 +1223,7 @@
             document.getElementById('generated-order-id').innerText = `Order ID: #BZ-${randomId}`;
 
             cart = [];
+            appliedDiscountPercent = 0;
             saveAndRenderCart();
             checkoutModal.classList.remove('active');
             successModal.classList.add('active');
