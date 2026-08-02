@@ -430,11 +430,28 @@
                     <option value="bKash">bKash / Nagad (Online Payment)</option>
                 </select>
             </div>
-            <div class="form-group" id="trx-group" style="display: none;">
-                <label>Transaction ID (TrxID)</label>
-                <input type="text" id="cust-trx" placeholder="Enter bKash/Nagad TrxID">
-                <small style="color: #666; font-size: 11px;">Send money to 01700000000 and enter TrxID</small>
+
+            <!-- bKash / Nagad Payment Details Box with Copy Button & Auto-Calculator -->
+            <div id="trx-group" class="payment-instructions" style="display: none; background: #f9f9f9; padding: 15px; border-radius: 6px; margin-top: 10px; border: 1px solid #eee;">
+                <p style="font-size: 12px; margin-bottom: 6px; font-weight: 500;">Please send money to this merchant number:</p>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                    <input type="text" id="merchant-number" value="01700000000" readonly style="padding: 7px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; width: 130px; font-size: 13px; background: #fff;">
+                    <button type="button" id="copy-btn" onclick="copyMerchantNumber()" style="background: #e2136d; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">Copy Number</button>
+                </div>
+                
+                <div style="font-size: 12px; color: #555; background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e5e5e5; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Items Subtotal:</span> <span>Tk <span id="calc-subtotal">0</span></span></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Delivery Charge:</span> <span>Tk <span id="calc-delivery">80</span></span></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span>Cash-out Charge (1.85%):</span> <span>Tk <span id="calc-charge">0</span></span></div>
+                    <div style="display: flex; justify-content: space-between; border-top: 1px solid #eee; padding-top: 4px; margin-top: 4px; font-weight: bold; color: #111;"><span>Total Payable:</span> <span>Tk <span id="calc-total">0</span></span></div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 11px;">Transaction ID (TrxID)</label>
+                    <input type="text" id="cust-trx" placeholder="Enter bKash/Nagad TrxID">
+                </div>
             </div>
+
             <button type="submit" class="submit-order-btn">Confirm Order</button>
         </form>
     </div>
@@ -729,7 +746,7 @@
                         <button class="add-to-cart-btn" style="flex:1;" onclick="addDetailedToCart(${product.id})">Add to Bag</button>
                     </div>
 
-                    <!-- WhatsApp Order Button Added Here -->
+                    <!-- WhatsApp Order Button -->
                     <button onclick="orderViaWhatsApp(${product.id})" style="width: 100%; background-color: #25d366; color: #fff; border: none; padding: 11px; font-size: 13px; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 4px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Order via WhatsApp
                     </button>
@@ -768,7 +785,6 @@
             modal.classList.add('active');
         }
 
-        // WhatsApp Order Function Added Here
         function orderViaWhatsApp(productId) {
             if (typeof products === 'undefined' || typeof storeConfig === 'undefined') return;
             const product = products.find(p => p.id === productId);
@@ -951,6 +967,7 @@
             const deliveryChargeEl = document.getElementById('cart-delivery-charge');
             if(deliveryChargeEl) deliveryChargeEl.innerText = `Tk ${fee}.00`;
             updateCartUI();
+            updatePaymentCalculation();
         }
 
         function updateCartUI() {
@@ -997,6 +1014,51 @@
             document.getElementById('cart-subtotal-price').innerText = `Tk ${subtotal.toLocaleString()}.00`;
             document.getElementById('cart-delivery-charge').innerText = `Tk ${deliveryFee}.00`;
             document.getElementById('cart-total-price').innerText = `Tk ${grandTotal.toLocaleString()}.00`;
+            
+            updatePaymentCalculation();
+        }
+
+        // bKash / Nagad Payment Auto Calculator & Copy Functions
+        function toggleTrxField() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const trxGroup = document.getElementById('trx-group');
+            if(trxGroup) {
+                trxGroup.style.display = (paymentMethod === 'bKash') ? 'block' : 'none';
+                if (paymentMethod === 'bKash') {
+                    updatePaymentCalculation();
+                }
+            }
+        }
+
+        function copyMerchantNumber() {
+            const numberInput = document.getElementById("merchant-number");
+            numberInput.select();
+            numberInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(numberInput.value);
+            
+            const copyBtn = document.getElementById("copy-btn");
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => {
+                copyBtn.innerText = "Copy Number";
+            }, 2000);
+        }
+
+        function updatePaymentCalculation() {
+            let subtotal = cart.reduce((sum, item) => sum + ((item.price || 0) * item.quantity), 0);
+            let deliveryFee = getDeliveryFee();
+            let merchandiseTotal = subtotal + deliveryFee;
+            let cashOutCharge = Math.round(merchandiseTotal * 0.0185);
+            let totalPayable = merchandiseTotal + cashOutCharge;
+
+            const subEl = document.getElementById("calc-subtotal");
+            const delEl = document.getElementById("calc-delivery");
+            const chgEl = document.getElementById("calc-charge");
+            const totEl = document.getElementById("calc-total");
+
+            if(subEl) subEl.innerText = subtotal.toLocaleString();
+            if(delEl) delEl.innerText = deliveryFee.toLocaleString();
+            if(chgEl) chgEl.innerText = cashOutCharge.toLocaleString();
+            if(totEl) totEl.innerText = totalPayable.toLocaleString();
         }
 
         const cartDrawer = document.getElementById('cart-drawer');
@@ -1082,6 +1144,7 @@
                 closeCart();
                 checkoutModal.classList.add('active');
                 drawerOverlay.classList.add('active');
+                updatePaymentCalculation();
             });
         }
 
@@ -1091,14 +1154,6 @@
                 checkoutModal.classList.remove('active');
                 drawerOverlay.classList.remove('active');
             });
-        }
-
-        function toggleTrxField() {
-            const paymentMethod = document.getElementById('payment-method').value;
-            const trxGroup = document.getElementById('trx-group');
-            if(trxGroup) {
-                trxGroup.style.display = (paymentMethod === 'bKash') ? 'block' : 'none';
-            }
         }
 
         function submitOrder(e) {
