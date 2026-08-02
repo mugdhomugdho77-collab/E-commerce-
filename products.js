@@ -4,6 +4,8 @@ const storeConfig = {
     phone: "+8801964336650",
     whatsapp: "+8801964336650",
     email: "support@bazeline.com",
+    bkash: "01964336650", // আপনার বিকাশ মার্চেন্ট/পার্সোনাল নম্বর দিন
+    nagad: "01964336650", // আপনার নগদ মার্চেন্ট/পার্সোনাল নম্বর দিন
     socials: {
         facebook: "https://facebook.com",
         instagram: "https://instagram.com",
