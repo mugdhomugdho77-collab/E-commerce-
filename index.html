@@ -99,7 +99,7 @@
 
         .badge-discount { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 3px; z-index: 3; }
         
-        /* Updated #2: Stock Urgency Badge Styles */
+        /* Stock Urgency Badge Styles */
         .badge-stock-urgency { position: absolute; top: 10px; right: 10px; background: #d32f2f; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 6px; border-radius: 3px; z-index: 3; animation: pulse-urgency 1.5s infinite; }
         @keyframes pulse-urgency {
             0% { opacity: 1; }
@@ -208,7 +208,7 @@
         <div class="nav-left">
             <button class="nav-icon-btn" id="menu-toggle-btn"><i class="fa-solid fa-bars"></i> Menu</button>
         </div>
-        <div class="logo">Bazeline</div>
+        <div class="logo" id="site-logo">Bazeline</div>
         <div class="nav-right">
             <button class="nav-icon-btn" id="wishlist-btn"><i class="fa-solid fa-heart"></i> Wishlist <span class="wishlist-badge" id="wishlist-count">0</span></button>
             <button class="nav-icon-btn" id="cart-btn"><i class="fa-solid fa-bag-shopping"></i> Bag <span class="cart-badge" id="cart-count">0</span></button>
@@ -491,12 +491,21 @@
             const footerContainer = document.getElementById('site-footer');
             if (!footerContainer) return;
 
+            // storeConfig থেকে ডাইনামিক ডেটা কল করা হচ্ছে
+            const sName = (typeof storeConfig !== 'undefined') ? storeConfig.name : "Bazeline";
+            const sPhone = (typeof storeConfig !== 'undefined') ? storeConfig.phone : "+8801700000000";
+            const sEmail = (typeof storeConfig !== 'undefined') ? storeConfig.email : "support@bazeline.com";
+
             footerContainer.className = "footer";
             footerContainer.innerHTML = `
-                <p>&copy; 2026 Bazeline. All Rights Reserved.</p>
-                <p>Hotline: +8801700000000 | Email: support@bazeline.com</p>
+                <p>&copy; 2026 ${sName}. All Rights Reserved.</p>
+                <p>Hotline: ${sPhone} | Email: ${sEmail}</p>
                 <p style="font-size: 11px; color: #666; margin-top: 10px;">Designed for Professional E-commerce Experience</p>
             `;
+
+            // লোগো বা হেডার নামও ডাইনামিক করার জন্য
+            const logoEl = document.getElementById('site-logo');
+            if(logoEl) logoEl.innerText = sName;
         }
 
         function renderProducts(list) {
