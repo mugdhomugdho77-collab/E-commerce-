@@ -431,11 +431,11 @@
                 </select>
             </div>
 
-            <!-- bKash / Nagad Payment Details Box with Copy Button & Auto-Calculator -->
+            <!-- bKash / Nagad Payment Details Box with Dynamic storeConfig Number & Auto-Calculator -->
             <div id="trx-group" class="payment-instructions" style="display: none; background: #f9f9f9; padding: 15px; border-radius: 6px; margin-top: 10px; border: 1px solid #eee;">
                 <p style="font-size: 12px; margin-bottom: 6px; font-weight: 500;">Please send money to this merchant number:</p>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-                    <input type="text" id="merchant-number" value="01700000000" readonly style="padding: 7px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; width: 130px; font-size: 13px; background: #fff;">
+                    <input type="text" id="merchant-number" readonly style="padding: 7px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; width: 140px; font-size: 13px; background: #fff;">
                     <button type="button" id="copy-btn" onclick="copyMerchantNumber()" style="background: #e2136d; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">Copy Number</button>
                 </div>
                 
@@ -509,7 +509,7 @@
             if (!footerContainer) return;
 
             const sName = (typeof storeConfig !== 'undefined') ? storeConfig.name : "Bazeline";
-            const sPhone = (typeof storeConfig !== 'undefined') ? storeConfig.phone : "+8801700000000";
+            const sPhone = (typeof storeConfig !== 'undefined') ? storeConfig.phone : "+8801964336650";
             const sEmail = (typeof storeConfig !== 'undefined') ? storeConfig.email : "support@bazeline.com";
 
             footerContainer.className = "footer";
@@ -521,6 +521,12 @@
 
             const logoEl = document.getElementById('site-logo');
             if(logoEl) logoEl.innerText = sName;
+
+            // Automatically set merchant number from storeConfig
+            const merchantInput = document.getElementById('merchant-number');
+            if(merchantInput && typeof storeConfig !== 'undefined') {
+                merchantInput.value = storeConfig.bkash || storeConfig.nagad || "+8801964336650";
+            }
         }
 
         function renderProducts(list) {
