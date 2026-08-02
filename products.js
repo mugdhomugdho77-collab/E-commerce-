@@ -4,8 +4,12 @@ const storeConfig = {
     phone: "+8801964336650",
     whatsapp: "+8801964336650",
     email: "support@bazeline.com",
-    bkash: "01964336650", // আপনার বিকাশ মার্চেন্ট/পার্সোনাল নম্বর দিন
-    nagad: "01964336650", // আপনার নগদ মার্চেন্ট/পার্সোনাল নম্বর দিন
+    bkash: "01964336650", // বিকাশ মার্চেন্ট/পার্সোনাল নম্বর
+    nagad: "01964336650", // নগদ মার্চেন্ট/পার্সোনাল নম্বর
+    coupons: {
+        "BAZELINE10": 10, // ১০% ডিসকাউন্ট কুপন
+        "SAVE50": 50      // ফ্ল্যাট বা অন্য যেকোনো অফার চাইলে যুক্ত করতে পারেন
+    },
     socials: {
         facebook: "https://facebook.com",
         instagram: "https://instagram.com",
@@ -23,6 +27,7 @@ const products = [
         oldPrice: 2200,
         discount: "16% OFF",
         stock: "In Stock",
+        stockCount: 4, // ইনস্ট্যান্ট স্টক কাউন্টার (FOMO তৈরি করার জন্য)
         image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
         hoverImage: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
         description: "Premium quality cotton Oxford white shirt designed for formal and casual wear. Comfortable fit and breathable fabric."
@@ -35,6 +40,7 @@ const products = [
         oldPrice: 1950,
         discount: "15% OFF",
         stock: "In Stock",
+        stockCount: 3,
         image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
         hoverImage: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
         description: "Lightweight sky blue linen shirt, perfect for summer outings and casual hangouts."
@@ -47,6 +53,7 @@ const products = [
         oldPrice: 2900,
         discount: "17% OFF",
         stock: "In Stock",
+        stockCount: 5,
         image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
         hoverImage: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600",
         description: "Elegant slim-fit black formal trousers tailored for office wear and formal events."
@@ -59,6 +66,7 @@ const products = [
         oldPrice: 2500,
         discount: "16% OFF",
         stock: "In Stock",
+        stockCount: 2, // মাত্র ২টি বাকি (FOMO)
         image: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600",
         hoverImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
         description: "Comfortable stretchable khaki chino pants suitable for everyday casual styling."
@@ -71,6 +79,7 @@ const products = [
         oldPrice: 2500,
         discount: "22% OFF",
         stock: "In Stock",
+        stockCount: 6,
         image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",
         hoverImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600",
         description: "Traditional yet modern black festive kurta crafted with fine fabric for special occasions."
@@ -83,6 +92,7 @@ const products = [
         oldPrice: 1100,
         discount: "23% OFF",
         stock: "In Stock",
+        stockCount: 8,
         image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
         hoverImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600",
         description: "Soft cotton minimalist black t-shirt offering maximum comfort and durability."
@@ -95,6 +105,7 @@ const products = [
         oldPrice: 3200,
         discount: "17% OFF",
         stock: "In Stock",
+        stockCount: 3,
         image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
         hoverImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
         description: "Premium navy blue trousers crafted for a sharp, executive corporate look."
@@ -107,6 +118,7 @@ const products = [
         oldPrice: 3500,
         discount: "19% OFF",
         stock: "In Stock",
+        stockCount: 4,
         image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",
         hoverImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600",
         description: "Exquisite festive designer panjabi for men, combining traditional aesthetics with modern comfort."
@@ -119,6 +131,7 @@ const products = [
         oldPrice: 1600,
         discount: "22% OFF",
         stock: "In Stock",
+        stockCount: 5,
         image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=600",
         hoverImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
         description: "Stylish urban polo shirt designed for casual smart-casual everyday wear."
@@ -131,6 +144,7 @@ const products = [
         oldPrice: 2400,
         discount: "18% OFF",
         stock: "In Stock",
+        stockCount: 3,
         image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600",
         hoverImage: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
         description: "Warm and cozy checkered flannel shirt, ideal for winter and stylish street style."
