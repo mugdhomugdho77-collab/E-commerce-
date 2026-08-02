@@ -1,7 +1,8 @@
 const storeConfig = {
     name: "Bazeline",
     address: "Daulatpur, Khulna, Bangladesh",
-    phone: "+8801700000000",
+    phone: "+8801964336650",
+    whatsapp: "+8801964336650",
     email: "support@bazeline.com",
     socials: {
         facebook: "https://facebook.com",
